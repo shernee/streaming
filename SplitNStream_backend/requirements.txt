@@ -1,0 +1,5 @@
+bleach==5.0.1
+Django==4.1.1
+djangorestframework==3.14.0
+factory-boy==3.2.1
+Faker==15.2.0
