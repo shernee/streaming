@@ -1,6 +1,8 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
-import { Nav, Container, Row, Col, Card } from 'react-bootstrap'
+import React, {useState, useEffect } from 'react'
+import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
+import { Nav, Container, Row, Col, Button } from 'react-bootstrap'
+import 'pages/home/index.css'
 
 const DATA = [
   {
@@ -30,49 +32,41 @@ const DATA = [
     ]
   },
 ]
-  
-
 export const Home = () => {
+  const navigate = useNavigate()
+  useEffect(() => {
+    const subscriptionsUrl = `http://127.0.0.1:8000/api/subscriptions/`
+    const loadData = async() => {
+      const serviceResponse = await axios.get(subscriptionsUrl)
+      console.log(`Service data: ${serviceResponse}`)
+    }
+    // loadData()
+  })
+
   return (
-    <div>
-      <Container fluid>
-        <Row>
-          <Col xs={3}>
-            <Nav className="col-md-12 d-none d-md-block bg-light sidebar" activeKey={'/home'}>
-              <Nav.Item>
-                <Link to="/home" className="nav-link">Home</Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col xs={10}>
-            {
-              DATA.map((service) => (
-                <Card>
-                  <Card.Body>
-                    <Card.Title>
-                      { service['Service'] }
-                    </Card.Title>
-                    <Card.Text>
-                      {
-                        service['Subscriptions'].map((sub) => (
-                          <Row>
-                            <Col>
-                              {sub['subName']}
-                            </Col>
-                            <Col>
-                              {sub['subPrice']}
-                            </Col>
-                          </Row>
-                        ))
-                      }
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              ))
-            }
-          </Col>
-        </Row>
-      </Container>
+    <div className="home-page">
+      <div className='sidebar'>
+          <div className="home-container" onClick={() => navigate('/home')}>
+            <text>Home</text>
+          </div>
+          <div className="user-info">
+            <text>Name</text>
+          </div>
+          <div className="current-subscriptions">
+            <text>Current subscriptions</text>
+          </div>
+          <div className="all-groups">
+            <text>All groups</text>
+          </div>         
+      </div>
+      <div className="home-view">
+        <div className="conditional-notifications">
+          <text>Notification box</text>
+        </div>
+        <div className="services-list">
+          List of services
+        </div>  
+      </div>
     </div>
   )
 }
