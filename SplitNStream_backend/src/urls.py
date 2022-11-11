@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app_split.views import subscription_views
+from app_split.views import auth_views, subscription_views, userdetail_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/subscriptions/', subscription_views.SubscriptionView.as_view())
+    path('api/auth/login/', auth_views.LoginView.as_view()),
+    path('api/subscriptions/', subscription_views.SubscriptionView.as_view()),
+    path('api/user-details/', userdetail_views.UserDetailView.as_view())
 ]

@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from rest_framework import status
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 
 from app_split.views import subscription_views
 from utils import test_utils
@@ -12,6 +12,8 @@ class SubscriptionGetTestCase(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.view = subscription_views.SubscriptionView.as_view()
+
+        self.user_model = test_utils.UserFactory() 
 
         # Create 3 services with 2 subscriptions each
         self.services_model_list = []
@@ -27,10 +29,24 @@ class SubscriptionGetTestCase(TestCase):
     ########
     # GET #
     ########
+
+    def test_authentication_required(self):
+        """User should be authenticated to make a get request"""
+
+        request = self.factory.get("/api/subscriptions/")
+
+        with self.assertNumQueries(0):
+            resp = self.view(request)
+
+        self.assertEqual(status.HTTP_403_FORBIDDEN, resp.status_code)
+
+
     def test_get_all_services(self):
         """Should list the 3 services"""
         
         request = self.factory.get("/api/subscriptions/")
+        force_authenticate(request=request, user=self.user_model)
+
         with self.assertNumQueries(2):
             resp = self.view(request)
 
@@ -51,6 +67,8 @@ class SubscriptionGetTestCase(TestCase):
             service_model.delete()
 
         request = self.factory.get("/api/subscriptions/")
+        force_authenticate(request=request, user=self.user_model)
+
         with self.assertNumQueries(1):
             resp = self.view(request)
 
@@ -65,6 +83,8 @@ class SubscriptionGetTestCase(TestCase):
         """Should list the 2 subscriptions in the first service"""
         
         request = self.factory.get("/api/subscriptions/")
+        force_authenticate(request=request, user=self.user_model)
+
         with self.assertNumQueries(2):
             resp = self.view(request)
 

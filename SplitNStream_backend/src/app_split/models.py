@@ -22,18 +22,6 @@ class Subscription(models.Model):
     
 
 class User(AbstractUser):
-    class RatingChoice(models.IntegerChoices): 
-        VERY_BAD = 1
-        BAD = 2
-        AVERAGE = 3
-        GOOD = 4
-        EXCELLENT = 5
-        
-    rating = models.CharField(
-        max_length = 20,
-        choices = RatingChoice.choices,
-        default = '3'
-        )
 
     def __str__(self):
         return f"{self.username}" 
@@ -48,10 +36,10 @@ class Group(models.Model):
     subscription = models.ForeignKey('Subscription',on_delete=models.CASCADE)
     members = models.ManyToManyField('User', through='Membership')
 
-    stage = models.CharField(
+    stage = models.PositiveSmallIntegerField(
         max_length = 20,
         choices = StageChoice.choices,
-        default = "1"
+        default = StageChoice.FORMATION
     )
     subscription_email = models.EmailField()
     subscription_password = models.CharField(max_length=50)
