@@ -41,9 +41,12 @@ class Group(models.Model):
         choices = StageChoice.choices,
         default = StageChoice.FORMATION
     )
-    subscription_email = models.EmailField()
-    subscription_password = models.CharField(max_length=50)
-    admin_passwd_for_email = models.CharField(max_length=50)
+    subscription_email = models.EmailField(null=True, blank=True)
+    subscription_password = models.CharField(max_length=50, null=True, blank=True)
+    admin_passwd_for_email = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return f"Group-{self.id}: {self.subscription.__str__()}"
 
 
 class Membership(models.Model):
@@ -51,7 +54,10 @@ class Membership(models.Model):
     group = models.ForeignKey('Group',on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}-{self.group.__str__()}"
 
 
 class Payment(models.Model):
