@@ -1,23 +1,15 @@
 .home-page {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-items: flex-start;
     align-items: flex-start;
-    background-color: red;
     margin: 20px;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 20%;
-    background-color: yellow;
 }
 
 .home-view {
     display: flex;
     height: 100%;
-    background-color: pink;
     flex-direction: column;
 }

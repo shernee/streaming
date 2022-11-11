@@ -1,0 +1,18 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+    background-color: darkslateblue;
+}
+
+.sidebar div {
+    margin: 20px;
+    background-color: lightgray;
+    color: black;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}

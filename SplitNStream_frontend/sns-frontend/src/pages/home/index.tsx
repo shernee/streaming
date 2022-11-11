@@ -1,71 +1,34 @@
 import React, {useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-import { Nav, Container, Row, Col, Button } from 'react-bootstrap'
+import { userShape, serviceShape } from  'data/type'
+import { Dashboard } from 'components/common/dashboard'
+import { ServiceCard } from 'components/home/service-card'
 import 'pages/home/index.css'
 
-const DATA = [
-  {
-    'Service': 'Service1',
-    'Subscriptions': [
-      {
-        'subName': 'Sub1',
-        'subPrice': 'Price1'
-      },
-      {
-        'subName': 'Sub2',
-        'subPrice': 'Price2'
-      }
-    ]
-  },
-  {
-    'Service': 'Service2',
-    'Subscriptions': [
-      {
-        'subName': 'Sub1',
-        'subPrice': 'Price1'
-      },
-      {
-        'subName': 'Sub2',
-        'subPrice': 'Price2'
-      }
-    ]
-  },
-]
 export const Home = () => {
+  const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
+  const [services, setServices] = useState<serviceShape>({'': []})
   const navigate = useNavigate()
+
   useEffect(() => {
-    const subscriptionsUrl = `http://127.0.0.1:8000/api/subscriptions/`
+    const subscriptionsUrl = `/api/subscriptions/`
+    const userDetailsUrl = `/api/user-details/`
     const loadData = async() => {
       const serviceResponse = await axios.get(subscriptionsUrl)
-      console.log(`Service data: ${serviceResponse}`)
+      const userDetailsResponse = await axios.get(userDetailsUrl)
+      console.log(`Service data: ${JSON.stringify(serviceResponse)}`)
+      setUser(userDetailsResponse.data)
+      setServices(serviceResponse.data)
     }
-    // loadData()
-  })
+    loadData()
+  }, [])
 
   return (
     <div className="home-page">
-      <div className='sidebar'>
-          <div className="home-container" onClick={() => navigate('/home')}>
-            <text>Home</text>
-          </div>
-          <div className="user-info">
-            <text>Name</text>
-          </div>
-          <div className="current-subscriptions">
-            <text>Current subscriptions</text>
-          </div>
-          <div className="all-groups">
-            <text>All groups</text>
-          </div>         
-      </div>
+      <Dashboard user={user} />
       <div className="home-view">
-        <div className="conditional-notifications">
-          <text>Notification box</text>
-        </div>
-        <div className="services-list">
-          List of services
-        </div>  
+        <ServiceCard services={services} />
       </div>
     </div>
   )
