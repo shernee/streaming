@@ -4,6 +4,6 @@ import errors
 
 def list_groups_for_subscription(subscription_model: int):
 
-    group_qs = Group.objects.filter(subscription_id=subscription_model.id)
+    group_qs = Group.objects.filter(subscription_id=subscription_model.id, stage=1)
 
     return group_qs
