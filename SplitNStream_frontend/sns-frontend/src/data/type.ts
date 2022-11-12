@@ -4,11 +4,21 @@ export interface userShape {
     email: string;
 }
 
-export interface subscriptionShape {
+interface subscriptionShape {
     name: string;
     price: number;
 }
 
 export interface serviceShape {
     [key: string]: Array<subscriptionShape>
+}
+
+interface groupListDetailsShape {
+    group: number;
+    max_members: number;
+    current_num_members: number;
+}
+
+export interface groupListShape {
+    [key: string]: Array<groupListDetailsShape>
 }
