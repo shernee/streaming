@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 import bleach
 
 from app_split.models import Service
-from src.app_split.services import userdetail_services
+from app_split.services import userdetail_services
 
 class UserDetailView(APIView):
     
