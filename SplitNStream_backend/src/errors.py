@@ -17,3 +17,11 @@ class UsernameConflictError(Error):
 class EmailConflictError(Error):
     message = "Your email is already in use"
     internal_error_code = 1040102
+
+#############################
+# 15. Group View Errors #
+#############################
+
+class SubscriptionIdDoesNotExist(Error):
+    message = "Subscription id does not exist"
+    internal_error_code = 1540101
