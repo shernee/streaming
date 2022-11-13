@@ -31,7 +31,7 @@ class Group(models.Model):
     class StageChoice(models.IntegerChoices): 
         FORMATION = 1
         GROUP_FORMED = 2
-        VIERIFIED = 3
+        VERIFIED = 3
 
     subscription = models.ForeignKey('Subscription',on_delete=models.CASCADE)
     members = models.ManyToManyField('User', through='Membership')
@@ -52,7 +52,7 @@ class Group(models.Model):
 class Membership(models.Model):
     user = models.ForeignKey('User',on_delete=models.CASCADE)
     group = models.ForeignKey('Group',on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(null=True, blank=True)
 
