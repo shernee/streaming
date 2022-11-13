@@ -52,3 +52,9 @@ def create_user(
 
     # communication_service.send_user_account_activation_email(user_model=user_model)
     return user_model
+
+def list_userdetails(request_user_model: User):
+
+    user_groups_qs = request_user_model.group_set.prefetch_related("subscription")      
+
+    return user_groups_qs

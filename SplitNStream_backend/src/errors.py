@@ -25,3 +25,7 @@ class EmailConflictError(Error):
 class SubscriptionIdDoesNotExist(Error):
     message = "Subscription id does not exist"
     internal_error_code = 1540101
+
+class GroupIdDoesNotExist(Error):
+    message = "Group id does ot exist"
+    internal_error_code = 1540102

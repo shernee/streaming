@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app_split.views import auth_views, subscription_views, userdetail_views, group_views
+from app_split.views import auth_views, subscription_views, user_views, group_views
+
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),

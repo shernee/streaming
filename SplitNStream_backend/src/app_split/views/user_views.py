@@ -6,14 +6,14 @@ from rest_framework.views import APIView
 import bleach
 
 from app_split.models import Service
-from app_split.services import userdetail_services
+from app_split.services import user_services
 
 class UserDetailView(APIView):
     
     def get(self, request):
         
         user_model = request.user
-        groups_qs = userdetail_services.list_userdetails(request_user_model=request.user)
+        groups_qs = user_services.list_userdetails(request_user_model=request.user)
 
         response_dict = {}
         for group_model in groups_qs:
