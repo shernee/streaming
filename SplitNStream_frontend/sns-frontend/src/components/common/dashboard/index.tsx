@@ -21,12 +21,18 @@ export const Dashboard = (props: IDashboardProps) => {
             <span>{user?.first_name} {user?.last_name}</span>
             <span>{user?.email}</span>
           </div>
-          <div className="current-subscriptions">
-            <text>Current subscriptions</text>
-          </div>
-          <div className="all-groups">
-            <text>All groups</text>
-          </div>         
+          {
+            !!user.Formation && (
+              <div>
+                <h5>Formation stage</h5>
+                {
+                  user.Formation.map((group) => (
+                    <div>{group.subscription}</div>
+                  ))
+                }
+              </div>
+            )
+          }       
       </div>
   )
 }
