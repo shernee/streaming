@@ -20,6 +20,7 @@ def list_groups_for_subscription(unsafe_subscription_id: int):
 
     # Check if subscription id exists
     if not Subscription.objects.filter(id=subscription_id).exists():
+
         raise custom_errors.SubscriptionIdDoesNotExist()
 
     # Get queryset of groups for subscription
@@ -86,6 +87,7 @@ def get_group_details(unsafe_group_id: int):
         .get(id=group_id)
 
     return group_model
+
     
 
     

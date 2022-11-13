@@ -1,7 +1,15 @@
+interface userGroupShape {
+    group: number;
+    subscription: string;
+}
+
 export interface userShape {
     first_name: string;
     last_name: string;
     email: string;
+    Formation?: Array<userGroupShape>;
+    Formed?: Array<userGroupShape>;
+    Verified?: Array<userGroupShape>;
 }
 
 interface subscriptionShape {
