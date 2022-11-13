@@ -30,14 +30,13 @@ class User(AbstractUser):
 class Group(models.Model):
     class StageChoice(models.IntegerChoices): 
         FORMATION = 1
-        GROUP_FORMED = 2
+        FORMED = 2
         VERIFIED = 3
 
     subscription = models.ForeignKey('Subscription',on_delete=models.CASCADE)
     members = models.ManyToManyField('User', through='Membership')
 
     stage = models.PositiveSmallIntegerField(
-        max_length = 20,
         choices = StageChoice.choices,
         default = StageChoice.FORMATION
     )
