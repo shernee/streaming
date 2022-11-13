@@ -66,3 +66,40 @@ class GroupCreateView(APIView):
 
         return Response(data=response_data_dict, status=status.HTTP_201_CREATED)
 
+
+class GroupDetailView(APIView):
+    
+    def get(self, request):
+        
+        unsafe_group_id = request.query_params.get('group_id', NoInputValue)
+
+        # Sanitize strings
+        # No string to sanitize
+
+        # Call service
+        try:
+            group_model = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
+        except ValidationError as e:
+            return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        except custom_errors.GroupIdDoesNotExist as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+
+
+        members = []
+        current_group_members = group_model.members.all()
+        for each in current_group_members:
+            members.append(each.username)
+        response_dict = {
+            "group_id": group_model.id,
+            "subscription_name": group_model.subscription.name,
+            "service_name": group_model.subscription.service.name,
+            "subscription_price": group_model.subscription.price,
+            "max_members_allowed":group_model.subscription.max_members_allowed,
+            "current_members": members,
+            "group_stage": group_model.get_stage_display(),
+            "price_per_member": round(group_model.subscription.price / group_model.subscription.max_members_allowed, 2),
+            "is_member": request.user in current_group_members
+        }
+                   
+        return Response(response_dict, status=status.HTTP_200_OK)
+
