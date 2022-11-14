@@ -18,7 +18,7 @@ class GroupListView(APIView):
 
         # Sanitize strings
         # No strings to sanitize
-
+        print(request)
         # Call service 
         try:
             group_qs = group_services.list_groups_for_subscription(unsafe_subscription_id=unsafe_subscription_id) 
@@ -39,7 +39,7 @@ class GroupListView(APIView):
         
         response_list =  groups_for_subscription
 
-        return Response(response_list, status=status.HTTP_200_OK)
+        return Response(data=response_list, status=status.HTTP_200_OK)
     
 class GroupCreateView(APIView):
 
@@ -60,11 +60,11 @@ class GroupCreateView(APIView):
             return get_business_error_response(
                 error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
 
-        response_data_dict = {
+        response_dict = {
             'group_id': group_model.id,
         }
 
-        return Response(data=response_data_dict, status=status.HTTP_201_CREATED)
+        return Response(data=response_dict, status=status.HTTP_201_CREATED)
 
 
 class GroupDetailView(APIView):
@@ -98,8 +98,42 @@ class GroupDetailView(APIView):
             "current_members": members,
             "group_stage": group_model.get_stage_display(),
             "price_per_member": round(group_model.subscription.price / group_model.subscription.max_members_allowed, 2),
-            "is_member": request.user in current_group_members
+            "is_member": request.user in current_group_members,
+            "user_id": request.user.id
+          
         }
                    
-        return Response(response_dict, status=status.HTTP_200_OK)
+        return Response(data=response_dict, status=status.HTTP_200_OK)
+
+
+class GroupJoinView(APIView):
+    
+    def post(self, request):
+
+        unsafe_group_id = request.data.get('group_id', NoInputValue)
+
+        # Sanitize strings
+        # No string to sanitize
+    
+        group_model = group_services.join_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
+
+        # Call service
+        try:
+            group_model = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
+        except ValidationError as e:
+            return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        except custom_errors.GroupIdDoesNotExist as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.GroupNotInFormationStage as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.UserMembershipExistsForGroup as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.GroupMemberLimitExceeded as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+
+        response_dict = {
+            'group_id': group_model.id,
+        }
+
+        return Response(data=response_dict, status=status.HTTP_201_CREATED)
 
