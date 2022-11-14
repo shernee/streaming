@@ -18,7 +18,7 @@ class GroupListView(APIView):
 
         # Sanitize strings
         # No strings to sanitize
-
+        print(request)
         # Call service 
         try:
             group_qs = group_services.list_groups_for_subscription(unsafe_subscription_id=unsafe_subscription_id) 
@@ -98,7 +98,9 @@ class GroupDetailView(APIView):
             "current_members": members,
             "group_stage": group_model.get_stage_display(),
             "price_per_member": round(group_model.subscription.price / group_model.subscription.max_members_allowed, 2),
-            "is_member": request.user in current_group_members
+            "is_member": request.user in current_group_members,
+            "user_id": request.user.id
+          
         }
                    
         return Response(response_dict, status=status.HTTP_200_OK)

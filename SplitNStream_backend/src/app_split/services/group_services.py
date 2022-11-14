@@ -27,7 +27,7 @@ def list_groups_for_subscription(unsafe_subscription_id: int):
     group_qs = Group.objects\
         .filter(subscription_id=subscription_id, stage=Group.StageChoice.FORMATION)\
         .prefetch_related('members')
-
+    
     return group_qs
 
 def create_group(
@@ -85,7 +85,6 @@ def get_group_details(unsafe_group_id: int):
     group_model = Group.objects\
         .prefetch_related('subscription')\
         .get(id=group_id)
-
     return group_model
 
     

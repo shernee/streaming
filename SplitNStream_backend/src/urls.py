@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app_split.views import auth_views, subscription_views, user_views, group_views
+from app_split.views import auth_views, subscription_views, userdetail_views,group_views,groupjoin_view
 
 
 urlpatterns = [
@@ -25,5 +25,8 @@ urlpatterns = [
     path('api/subscriptions/', subscription_views.SubscriptionView.as_view()),
     path('api/user-details/', userdetail_views.UserDetailView.as_view()),
     path('api/group-list/', group_views.GroupListView.as_view()),
-    path('api/group-create/', group_views.GroupCreateView.as_view())
+    path('api/group-create/', group_views.GroupCreateView.as_view()),
+    path('api/group-detail/', group_views.GroupDetailView.as_view()),
+    path('api/group-join/', groupjoin_view.GroupJoinView.as_view())
+
 ]
