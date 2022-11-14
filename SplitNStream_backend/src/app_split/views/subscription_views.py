@@ -20,6 +20,7 @@ class SubscriptionView(APIView):
         for subscription_model in subscriptions_qs:
             service_name = subscription_model.service.name
             subscription_details_dict = {
+                "subscription_id": subscription_model.id,
                 "name": subscription_model.name,
                 "price": subscription_model.price
             }
