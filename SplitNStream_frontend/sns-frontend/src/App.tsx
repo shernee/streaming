@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/home" element={<Home />}/>
-        <Route path="/group-list" element={<GroupList />} />
+        <Route path="/group-list/:subscriptionId" element={<GroupList />} />
       </Routes>
     </div>
   );

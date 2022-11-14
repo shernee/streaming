@@ -13,6 +13,7 @@ export interface userShape {
 }
 
 interface subscriptionShape {
+    subscription_id: number;
     name: string;
     price: number;
 }
