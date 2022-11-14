@@ -29,3 +29,15 @@ class SubscriptionIdDoesNotExist(Error):
 class GroupIdDoesNotExist(Error):
     message = "Group id does ot exist"
     internal_error_code = 1540102
+
+class GroupNotInFormationStage(Error):
+    message = "The Group is not in the FORMATION Stage"
+    internal_error_code = 1540103
+
+class UserMembershipExistsForGroup(Error):
+    message = "User is already a group member"
+    internal_error_code = 1540104
+
+class GroupMemberLimitExceeded(Error):
+    message = "Number of group members has exceeded the limit"
+    internal_error_code = 1540105
