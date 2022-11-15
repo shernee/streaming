@@ -112,7 +112,7 @@ def join_group(request_user_model:User, unsafe_group_id:int):
     if group_model.stage != Group.StageChoice.FORMATION:
         raise custom_errors.GroupNotInFormationStage
 
-    group_members = group_model.members.all()
+    group_members = group_model.members.filter(membership__is_active=True)
     if request_user_model in group_members:
         raise custom_errors.UserMembershipExistsForGroup()
 
@@ -147,7 +147,7 @@ def leave_group(request_user_model:User, unsafe_group_id:int):
         
     # Get queryset of group details for given groupid
     group_model = Group.objects\
-        .prefetch_related('membership')\
+        .prefetch_related('members')\
         .get(id=group_id)
 
     #Get the active members from the group model
