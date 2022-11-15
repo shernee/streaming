@@ -119,14 +119,13 @@ def join_group(request_user_model:User, unsafe_group_id:int):
     if len(group_members) >= group_model.subscription.max_members_allowed:
         raise custom_errors.GroupMemberLimitExceeded()
             
-    with transaction.atomic():
-        # Create membership for user
-        membership_model = Membership.objects.create(
-            user=request_user_model,
-            group=group_model,
-            is_active=True,
-            start_date=datetime.datetime.now()
-        )
+    # Create membership for user
+    membership_model = Membership.objects.create(
+        user=request_user_model,
+        group=group_model,
+        is_active=True,
+        start_date=datetime.datetime.now()
+    )
 
     return group_model
 
@@ -160,7 +159,7 @@ def leave_group(request_user_model:User, unsafe_group_id:int):
     if len(group_members) >= group_model.subscription.max_members_allowed:
         raise custom_errors.GroupMemberLimitExceeded()
 
-    #If there is only one user left in the group, delete both user instances and group 
+    #If there is only one user left in the group, delete both membership instance and group 
     if len(group_members) == 1:
         with transaction.atomic():
             # Create membership for user
@@ -172,7 +171,6 @@ def leave_group(request_user_model:User, unsafe_group_id:int):
         
         membership_model = Membership.objects.filter(user=request_user_model, group=group_model).delete()
        
-
 
     return group_model
 

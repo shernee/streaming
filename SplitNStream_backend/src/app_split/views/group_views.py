@@ -139,18 +139,17 @@ class GroupJoinView(APIView):
 
 class GroupLeaveView(APIView):
     
-    def Delete(self, request):
+    def delete(self, request):
 
-        unsafe_group_id = request.data.get('group_id', NoInputValue)
+        unsafe_group_id = request.query_params.get('group_id', NoInputValue)
 
         # Sanitize strings
         # No string to sanitize
-    
-        group_model = group_services.leave_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
+      
 
         # Call service
         try:
-            group_model = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
+            group_model = group_services.leave_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
         except ValidationError as e:
             return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         except custom_errors.GroupIdDoesNotExist as e:
