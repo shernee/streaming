@@ -1,24 +1,42 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import axios from 'axios'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true
 
 export const Login = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  useEffect(() => {
     const loginUrl = `http://splitnshare.local/api/auth/login/`
-    const loginPostData = {
-      username: username,
-      password: password,
-      next: `http://splitnshare.local/home`
-    }
+    axios.get(loginUrl)
+    console.log(username)
+  }, [username])
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const loginUrl = `http://splitnshare.local/api/auth/login/`
+    let formData = new FormData();    
+
+    formData.append('username', username);   
+    formData.append('password', password);
+    formData.append('csrfmiddlewaretoken', Cookies.get('csrftoken') || "");
+    // const loginPostData = {
+    //   username: username,
+    //   password: password,
+    //   csrfmiddlewaretoken: Cookies.get('csrftoken')
+    // }
     console.log('In login')
     const userLogin = async() => {
-      axios.post(loginUrl, loginPostData).then((loginResponse) => {
-        if(loginResponse.status) {
+      axios.post(loginUrl, formData).then((loginResponse) => {
+        if(loginResponse.status===202) {
           navigate('/home')
+        } else {
+          console.log(loginResponse.data)
         }
       })
       
