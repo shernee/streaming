@@ -1,10 +1,14 @@
 import React, {useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import {Button} from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { userShape, groupDetailShape } from 'data/type'
 import { Dashboard } from 'components/common/dashboard'
 import 'pages/group-detail/index.css'
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true
 
 // const groupDetail = {
 //   "group_id": 1,
@@ -35,6 +39,7 @@ export const GroupDetail = () => {
       is_member: false,
       user_id: -1
     })
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate()
     const { groupId } = useParams()
   
@@ -49,14 +54,40 @@ export const GroupDetail = () => {
       }
       loadData()
 
-    }, [])
+    }, [groupId])
 
     const handleLeaveGroup = () => {
-      const leaveGroupUrl = `/api/leave-group/?group_id=${groupId}`
+      if(groupDetail.current_members.length === 1){
+        setShowModal(true)
+      } else {
+        callLeaveGroupApi()
+      }
+    }
+
+    const callLeaveGroupApi = () => {
+      const leaveGroupUrl = `/api/group-leave/?group_id=${groupId}`
+      axios.delete(leaveGroupUrl).then(resp => {
+        if(resp.status === 204) {
+          navigate('/home')
+        } else {
+          alert(`${resp.statusText}`)
+        }
+      })
     }
 
     const handleJoinGroup = () => {
-      const joinGroupUrl = `/api/join-group/?group_id=${groupId}`
+      const joinGroupUrl = `/api/group-join/`
+      const joinGroupPostData = {
+        group_id: groupId
+      }
+      axios.post(joinGroupUrl, joinGroupPostData).then((resp) => {
+        if(resp.status === 201) {
+          const joinedGroupId = resp.data.group_id
+          window.location.reload()
+        } else {
+          alert(`${resp.statusText}`)
+        }
+      })
     }
 
     const detailsToDisplay = [
@@ -92,30 +123,45 @@ export const GroupDetail = () => {
             }          
           </div>
           <div className="group-member-info">
-            {
-              groupDetail.current_members.map(member => (
-                <div className="member-tray">
-                  <h6>Members</h6>
-                  <div className='detail-info-header'>
-                    { member }
-                  </div>
-                </div>  
-              ))
-            } 
+            <h6>Members</h6>
+            <div className="member-tray">
+              {
+                groupDetail.current_members.map(member => (                
+                    <div className='member-box'>
+                      { member }
+                    </div>                  
+                ))
+              }
+            </div>   
           </div>
           <div className="action-row">
             {
               !groupDetail.is_member ? (
-                <Button variant="success" onClick={() => handleJoinGroup()}>
-                  Join
-                </Button>
-              ) : (
-                <Button variant="danger" onClick={() => handleLeaveGroup()}>
-                  Leave group
-                </Button>
+                  groupDetail.group_stage === "Formation" && 
+                  <Button variant="success" onClick={() => handleJoinGroup()}>
+                    Join
+                  </Button>
+                ) : (
+                  <Button variant="danger" onClick={() => handleLeaveGroup()}>
+                    Leave group
+                  </Button>
               )
             }
-          </div>       
+          </div>
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Dialog>
+              <Modal.Header>
+                <Modal.Title> Your group will be deleted</Modal.Title>
+              </Modal.Header>             
+              <Modal.Body>
+                <p>You are the only member of the group. Your group will be deleted once you leave!</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="danger" onClick={() => setShowModal(false)}>Don't leave</Button>
+                <Button variant="primary" onClick={() => callLeaveGroupApi()}>Leave group</Button>
+              </Modal.Footer>
+            </Modal.Dialog> 
+          </Modal>      
         </div>
       </div>
     )

@@ -165,4 +165,4 @@ class GroupLeaveView(APIView):
             'message': "deleted user from the membership"
         }
 
-        return Response(data=response_dict, status=status.HTTP_204_DELETED)
+        return Response(data=response_dict, status=status.HTTP_204_NO_CONTENT)

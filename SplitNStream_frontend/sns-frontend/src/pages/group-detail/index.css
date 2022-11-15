@@ -46,7 +46,7 @@
 
 .group-member-info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     justify-items: flex-start;
     padding: 10px;
@@ -56,6 +56,20 @@
     border-radius: 10px;
     background-color: white;
     margin-bottom: 10px;
+}
+
+.member-tray {
+    display: flex;
+    flex-direction: row;
+}
+
+.member-box {
+    padding: 10px;
+    border-width: 1px;
+    border-color: darkslateblue;
+    border-style: solid;
+    border-radius: 10px;
+    margin: 5px;
 }
 
 .action-row {
