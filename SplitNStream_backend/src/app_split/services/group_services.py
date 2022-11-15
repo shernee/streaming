@@ -118,22 +118,6 @@ def join_group(request_user_model:User, unsafe_group_id:int):
 
     if len(group_members) >= group_model.subscription.max_members_allowed:
         raise custom_errors.GroupMemberLimitExceeded()
-
-    # #get service name from group_qs
-    # for each in group_qs:
-    #     group_id_service = each.subscription.id
-
-
-    # #get group of lists for that service
-    # group_list_qs = Group.objects\
-    # .filter(subscription_id=group_id_service, stage=Group.StageChoice.FORMATION)\
-    # .prefetch_related('members')
-    # for each_group in group_list_qs:
-    #     users_list = each_group.members.all().values('id')
-    #     if user_model[0].id in users_list:
-    #         return False
-            # if len(each.members) == each.subscription.max_members_allowed:
-            # return False
             
     with transaction.atomic():
         # Create membership for user
@@ -143,15 +127,55 @@ def join_group(request_user_model:User, unsafe_group_id:int):
             is_active=True,
             start_date=datetime.datetime.now()
         )
-        # membership_update_rows = Membership.objects.update_or_create(
-        #     #user=user_model[0].id,
-        #     user = user_model[0],
-        #     group=group_qs[0],
-        #     is_active=True,
-        #     start_date=datetime.datetime.now()
-        # )
 
     return group_model
+
+def leave_group(request_user_model:User, unsafe_group_id:int):   
+
+    fields_to_validate_dict = {
+        "group_id": unsafe_group_id,
+    }
+    group_details_serializer = group_serializers.GroupDetailsSerializer(data=fields_to_validate_dict)
+    group_details_serializer.is_valid(raise_exception=True)
+    validated_dict = group_details_serializer.validated_data
+
+    # substitute defaults if needed
+    group_id = validated_dict.get('group_id')     
+
+    # Check if group id exists
+    if not Group.objects.filter(id=group_id).exists():
+        raise custom_errors.GroupIdDoesNotExist()
+        
+    # Get queryset of group details for given groupid
+    group_model = Group.objects\
+        .prefetch_related('membership')\
+        .get(id=group_id)
+
+    #Get the active members from the group model
+    group_members = group_model.members.filter(membership__is_active=True)
+
+    if request_user_model not in group_members:
+        raise custom_errors.UserMembershipDoesNotExistForGroup()
+
+    if len(group_members) >= group_model.subscription.max_members_allowed:
+        raise custom_errors.GroupMemberLimitExceeded()
+
+    #If there is only one user left in the group, delete both user instances and group 
+    if len(group_members) == 1:
+        with transaction.atomic():
+            # Create membership for user
+            membership_model = Membership.objects.filter(user=request_user_model, group=group_model).delete()
+            group_model =  Group.objects.filter(id=group_id).delete()
+
+    #Delete user instance if group still has active members in it
+    elif len(group_members) > 1 and len(group_members) <= group_model.subscription.max_members_allowed:
+        
+        membership_model = Membership.objects.filter(user=request_user_model, group=group_model).delete()
+       
+
+
+    return group_model
+
 
     
 

@@ -41,3 +41,7 @@ class UserMembershipExistsForGroup(Error):
 class GroupMemberLimitExceeded(Error):
     message = "Number of group members has exceeded the limit"
     internal_error_code = 1540105
+
+class UserMembershipDoesNotExistForGroup(Error):
+    message = "User is already a group member"
+    internal_error_code = 1540106
