@@ -86,7 +86,7 @@ class GroupDetailView(APIView):
 
 
         members = []
-        current_group_members = group_model.members.all()
+        current_group_members = group_model.members.filter(membership__is_active=True)
         for each in current_group_members:
             members.append(each.username)
         response_dict = {
@@ -137,3 +137,32 @@ class GroupJoinView(APIView):
 
         return Response(data=response_dict, status=status.HTTP_201_CREATED)
 
+class GroupLeaveView(APIView):
+    
+    def delete(self, request):
+
+        unsafe_group_id = request.query_params.get('group_id', NoInputValue)
+
+        # Sanitize strings
+        # No string to sanitize
+      
+
+        # Call service
+        try:
+            group_model = group_services.leave_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
+        except ValidationError as e:
+            return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        except custom_errors.GroupIdDoesNotExist as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.GroupNotInFormationStage as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.UserMembershipExistsForGroup as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+        except custom_errors.GroupMemberLimitExceeded as e:
+            return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+
+        response_dict = {
+            'message': "deleted user from the membership"
+        }
+
+        return Response(data=response_dict, status=status.HTTP_204_DELETED)

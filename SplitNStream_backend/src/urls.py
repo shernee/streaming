@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/group-list/', group_views.GroupListView.as_view()),
     path('api/group-create/', group_views.GroupCreateView.as_view()),
     path('api/group-detail/', group_views.GroupDetailView.as_view()),
-    path('api/group-join/', group_views.GroupJoinView.as_view())
-
+    path('api/group-join/', group_views.GroupJoinView.as_view()),
+    path('api/group-leave/', group_views.GroupLeaveView.as_view())
 ]
