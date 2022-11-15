@@ -12,7 +12,43 @@
     color: black;
 }
 
+.home-container:hover {
+    cursor: pointer;
+    color: white;
+}
+
 .user-info {
     display: flex;
     flex-direction: column;
+}
+
+.user-groups {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.user-group-header {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.stage-section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    text-align: left;
+}
+
+.groups-in-stage {
+    margin-top: 0 !important
+}
+
+.group-name {
+    margin: 5px !important
+}
+
+.group-name:hover {
+    cursor: pointer;
+    color: white;
 }

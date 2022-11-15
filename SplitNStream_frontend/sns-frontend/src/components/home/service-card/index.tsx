@@ -19,7 +19,7 @@ export const ServiceCard = (props: IServiceCard) => {
   return (
     <div className='service-card'>
       {
-        Object.keys(services).map((index, service) => (
+        Object.keys(services).map((service, index) => (
           <Card key={index}>
             <Card.Body>
               <Card.Title>

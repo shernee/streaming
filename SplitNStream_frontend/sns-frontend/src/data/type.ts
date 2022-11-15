@@ -1,4 +1,4 @@
-interface userGroupShape {
+export interface userGroupShape {
     group: number;
     subscription: string;
 }
