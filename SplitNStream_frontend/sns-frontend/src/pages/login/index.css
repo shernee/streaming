@@ -62,3 +62,11 @@ input:focus{
     position: absolute;
     transform: scale(0);
 }
+
+.signup-link {
+    color: rgb(100, 156, 156);
+}
+
+.signup-link:hover {
+    cursor: pointer;
+}
