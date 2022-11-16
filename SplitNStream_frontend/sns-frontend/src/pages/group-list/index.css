@@ -11,5 +11,11 @@
 .list-view {
     display: flex;
     height: 100%;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.e-listview .e-list-item {
+    text-align: center;
+    color: pink;
+    background-color: #2fa1ff;
 }

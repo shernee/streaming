@@ -24,6 +24,7 @@ export interface serviceShape {
 
 interface groupListDetailsShape {
     group: number;
+    name: string;
     max_members: number;
     current_num_members: number;
 }
@@ -32,7 +33,7 @@ export interface groupListShape {
     [key: string]: Array<groupListDetailsShape>
 }
 
-export interface groupDetailShape {   
+export interface groupDetailShape {
     group_id: number;
     subscription_name: string;
     service_name: string;
