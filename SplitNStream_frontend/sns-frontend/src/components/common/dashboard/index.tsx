@@ -41,23 +41,23 @@ export const Dashboard = (props: IDashboardProps) => {
           </div>
           <div className="user-groups">
             <h5 className="user-group-header">Your groups</h5>
-            <div className="stage-section">
-            {
-              !!user.Formation && (
-                groupsInStage('Formation', user.Formation)
-              )
-            } 
-            {
-              !!user.Formed && (
-                groupsInStage('Formed', user.Formed)
-              )
-            }
-            {
-              !!user.Verified && (
-                groupsInStage('Verified', user.Verified)
-              )
-            } 
-            </div> 
+              <div className="stage-section">
+              {
+                !!user.Formation && (
+                  groupsInStage('Formation', user.Formation)
+                )
+              } 
+              {
+                !!user.Formed && (
+                  groupsInStage('Formed', user.Formed)
+                )
+              }
+              {
+                !!user.Verified && (
+                  groupsInStage('Verified', user.Verified)
+                )
+              } 
+              </div> 
           </div>     
       </div>
   )

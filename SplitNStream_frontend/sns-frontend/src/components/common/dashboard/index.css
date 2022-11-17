@@ -3,23 +3,36 @@
     flex-direction: column;
     height: 100%;
     width: 20%;
-    background-color: darkslateblue;
+    margin: 20px;
+    border-width: 1px;
+    border-color: darkslateblue;
+    border-style: solid;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .sidebar div {
     margin: 20px;
-    background-color: lightgray;
     color: black;
+}
+
+.home-container {
+    border-bottom: 0.5px;
+    border-bottom-color: darkslateblue;
+    border-bottom-style: solid;
 }
 
 .home-container:hover {
     cursor: pointer;
-    color: white;
+    color: darkslateblue;
 }
 
 .user-info {
     display: flex;
     flex-direction: column;
+    border-bottom: 0.5px;
+    border-bottom-color: darkslateblue;
+    border-bottom-style: solid;
 }
 
 .user-groups {
@@ -50,5 +63,5 @@
 
 .group-name:hover {
     cursor: pointer;
-    color: white;
+    color: darkslateblue;
 }

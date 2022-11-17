@@ -7,6 +7,7 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.withCredentials = true
 
+
 export const Login = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
@@ -14,13 +15,13 @@ export const Login = () => {
   const [errors, setErrors] = useState("")
 
   useEffect(() => {
-    const loginUrl = `http://splitnshare.local/api/auth/login/`
+    const loginUrl = `/api/auth/login/`
     axios.get(loginUrl)
   }, [])
 
   const handleLogin = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const loginUrl = `http://splitnshare.local/api/auth/login/`
+    const loginUrl = `/api/auth/login/`
     let formData = new FormData();    
     formData.append('username', username);   
     formData.append('password', password);
