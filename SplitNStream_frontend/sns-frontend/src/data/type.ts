@@ -22,15 +22,10 @@ export interface serviceShape {
     [key: string]: Array<subscriptionShape>
 }
 
-interface groupListDetailsShape {
+export interface groupListDetailsShape {
     group: number;
-    name: string;
     max_members: number;
     current_num_members: number;
-}
-
-export interface groupListShape {
-    [key: string]: Array<groupListDetailsShape>
 }
 
 export interface groupDetailShape {

@@ -1,0 +1,23 @@
+.group-list-section {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.list-group {
+    border-width: 1px;
+    border-color: darkslateblue;
+    border-style: solid;
+    border-radius: 5px;
+}
+.group-row:hover {
+    cursor: pointer;
+    color: darkslateblue;
+    transform: scale(1.05)
+}
+
+
+
