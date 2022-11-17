@@ -11,7 +11,6 @@ RUN npm ci
 
 # Copy app src, public files
 COPY SplitNStream_frontend/sns-frontend/ .
-COPY SplitNStream_frontend/sns-frontend/ .
 
 # ==== BUILD =====
 # Build the app
