@@ -1,5 +1,31 @@
-.service-card {
+.service-card-list {
     display: flex;
     height: 100%;
     flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.card {
+    border-width: 1px;
+    border-color: darkslateblue;
+    border-style: solid;
+    border-radius: 10px;
+    margin: 10px;
+    width: 40%;
+}
+
+.card-title {
+    border-bottom: 0.5px;
+    border-bottom-color: darkslateblue;
+    border-bottom-style: solid;
+    padding-bottom: 2px;
+}
+
+.subscription-row {
+
+    cursor: pointer;
+    color: darkslateblue;
+
 }
