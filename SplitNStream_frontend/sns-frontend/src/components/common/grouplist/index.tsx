@@ -1,7 +1,9 @@
-import 'components/common/grouplist/index.css'
-import { groupListShape } from 'data/type'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import 'components/common/grouplist/index.css';
+import { groupListShape } from 'data/type';
+import React from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { useNavigate } from 'react-router-dom';
+
 
 interface IGroups {
     groups: groupListShape
@@ -15,34 +17,31 @@ export const GroupList = (props: IGroups) => {
         navigate(`/group-detail/${groupId}`)
     }
 
-        const listToDisplay = [
-    {
-        label: 'group1',
-        value: "group1"
-    },
-    {
-        label: "group2",
-        value: "group2"
-    },
-    {
-        label: "group3",
-        value: "group3"
-    }]
-
     return (
     <div className='group-list' e-listview>
             {
-                listToDisplay.map(list => (
-                <div className="list-row" id='ui-list' >
-                    <div className='detail-info-header' id='list'>
-                        { list.label }
-                    </div>
-                    <div className='detail-info-text'>
-                        { list.value }
-                    </div>
-                    </div>
+                //display the list of groups
+                Object.keys(groups).map((group, index) => (
+                    <ListGroup key={index}>
+                        {
+                            groups[group].map((group) => (
+                                <ListGroup.Item
+                                    key={group.group}
+                                    className="d-flex justify-content-between align-items-start"
+                                    onClick={(e) => handleSelectGroup(e, group.group)}
+                                >
+                                    <span>
+                                        {group.name}
+                                    </span>
+                                    <span>
+                                        {group.current_num_members}
+                                    </span>
+                                </ListGroup.Item>
+                            ))
+                        }
+                    </ListGroup>
                 ))
             }
-    </div>
-    );
+        </div>
+    )
 }

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 
+
 export const Groups = () => {
   const [user, setUser] = useState<userShape>({first_name: 'Wesley', last_name: 'Shih', email: 'shih.wesley@gmail.com'})
   const [grouplist, setGroupList] = useState<groupListShape>({

@@ -9,9 +9,8 @@
 }
 
 .list-view {
-    display: flex;
+    display: table-row;
     height: 100%;
-    flex-direction: row;
 }
 
 .e-listview .e-list-item {
