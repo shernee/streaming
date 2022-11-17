@@ -143,3 +143,5 @@ STATIC_URL = "/api/static/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:9000', 'http://splitnshare.local']
+
