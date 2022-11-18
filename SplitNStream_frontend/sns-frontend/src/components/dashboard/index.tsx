@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap'
 import { userShape, userGroupShape } from  'data/type'
-import 'components/common/dashboard/index.css'
+import 'components/dashboard/index.css'
 
 interface IDashboardProps {
     user: userShape

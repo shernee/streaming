@@ -2,7 +2,7 @@ import { groupListDetailsShape } from 'data/type';
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate } from 'react-router-dom';
-import 'components/common/subscription-groups/index.css';
+import 'components/subscription-groups/index.css';
 
 
 interface IGroupList {
