@@ -16,3 +16,15 @@
     flex-direction: column;
     margin: 20px;
 }
+
+.groupType-list-section {
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.action-row {
+    padding-top: 5px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+}

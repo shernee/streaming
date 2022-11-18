@@ -66,11 +66,11 @@ export const GroupInformation = (props: IGroupInformation) => {
         {
           !group.is_member ? (
             group.group_stage === "Formation" &&
-            <Button variant="success" onClick={() => handleJoinGroup}>
+            <Button variant="success" onClick={() => handleJoinGroup()}>
               Join
             </Button>
           ) : (
-            <Button variant="danger" onClick={() => handleLeaveGroup}>
+            <Button variant="danger" onClick={() => handleLeaveGroup()}>
               Leave group
             </Button>
           )

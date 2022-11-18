@@ -30,18 +30,18 @@ const services = {
 
 export const Home = () => {
   const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
-  // const [services, setServices] = useState<serviceShape>({'': []})
+  const [services, setServices] = useState<serviceShape>({'': []})
   const navigate = useNavigate()
 
   useEffect(() => {
-    // const subscriptionsUrl = `/api/subscriptions/`
+    const subscriptionsUrl = `/api/subscriptions/`
     const userDetailsUrl = `/api/user-details/`
     const loadData = async() => {
-      // const serviceResponse = await axios.get(subscriptionsUrl)
+      const serviceResponse = await axios.get(subscriptionsUrl)
       const userDetailsResponse = await axios.get(userDetailsUrl)
-      // console.log(`Service data: ${JSON.stringify(serviceResponse)}`)
+      console.log(`Service data: ${JSON.stringify(serviceResponse)}`)
       setUser(userDetailsResponse.data)
-      // setServices(serviceResponse.data)
+      setServices(serviceResponse.data)
     }
     loadData()
   }, [])
