@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { Dashboard } from 'components/common/dashboard'
-import { SubscriptionGroups } from 'components/common/subscription-groups'
+import { Dashboard } from 'components/dashboard'
+import { SubscriptionGroups } from 'components/subscription-groups'
 import { groupListDetailsShape, userShape } from 'data/type'
 import 'pages/group-list/index.css'
 import { useEffect, useState } from 'react'

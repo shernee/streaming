@@ -2,8 +2,8 @@ import React, {useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { userShape, serviceShape } from  'data/type'
-import { Dashboard } from 'components/common/dashboard'
-import { ServiceCard } from 'components/home/service-card'
+import { Dashboard } from 'components/dashboard'
+import { ServiceCard } from 'components/service-card'
 import 'pages/home/index.css'
 
 const services = {

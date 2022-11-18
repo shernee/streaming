@@ -3,7 +3,8 @@ import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button, Modal } from 'react-bootstrap';
 import { userShape, groupDetailShape } from 'data/type'
-import { Dashboard } from 'components/common/dashboard'
+import { Dashboard } from 'components/dashboard'
+import { GroupInformation } from 'components/group-information';
 import 'pages/group-detail/index.css'
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -90,64 +91,17 @@ export const GroupDetail = () => {
       })
     }
 
-    const detailsToDisplay = [
-      {
-        label: 'Subscription',
-        value: `${groupDetail['subscription_name']} subscription for ${groupDetail['service_name']}`
-      },
-      {
-        label: "Price of the Subscription",
-        value: `$${groupDetail['subscription_price']}`
-      },
-      {
-        label: "Each member of the group pays",
-        value: `$${groupDetail['price_per_member']}`
-      }]   
+  
   
     return (
       <div className="group-detail-page">
         <Dashboard user={user} />
-        <div className="detail-view">  
-          <div className="group-details-info">  
-            {              
-                detailsToDisplay.map(detail => (
-                  <div className="detail-row">
-                      <div className='detail-info-header'>
-                        { detail.label }
-                      </div>
-                      <div className='detail-info-text'>
-                        { detail.value }
-                      </div>
-                    </div>
-                ))
-            }          
-          </div>
-          <div className="group-member-info">
-            <h6>Members</h6>
-            <div className="member-tray">
-              {
-                groupDetail.current_members.map(member => (                
-                    <div className='member-box'>
-                      { member }
-                    </div>                  
-                ))
-              }
-            </div>   
-          </div>
-          <div className="action-row">
-            {
-              !groupDetail.is_member ? (
-                  groupDetail.group_stage === "Formation" && 
-                  <Button variant="success" onClick={() => handleJoinGroup()}>
-                    Join
-                  </Button>
-                ) : (
-                  <Button variant="danger" onClick={() => handleLeaveGroup()}>
-                    Leave group
-                  </Button>
-              )
-            }
-          </div>
+        <div className="detail-view"> 
+          <GroupInformation 
+            group={groupDetail} 
+            handleJoinGroup={handleJoinGroup} 
+            handleLeaveGroup={handleLeaveGroup} 
+          /> 
           <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Dialog>
               <Modal.Header>
