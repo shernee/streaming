@@ -59,7 +59,7 @@ export const Login = () => {
           />
           {!!errors && <p>{errors}</p>}
           <div className="login-btn" onClick={(e) => handleLogin(e)}>Login</div>
-          <p className="text">Not a member yet? Signup!</p>
+          <span className='signup' onClick={e => navigate('/signup')}>Not a member yet? Signup!</span>
       </div>
     </div>
   )
