@@ -46,3 +46,11 @@ export interface groupDetailShape {
     is_member: boolean;
     user_id: number;
 }
+
+export interface SignUpShape {
+    username : string,
+    first_name: string,
+    last_name: string,
+    email : string,
+    password : string,
+ }

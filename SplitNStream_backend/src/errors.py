@@ -45,3 +45,7 @@ class GroupMemberLimitExceeded(Error):
 class UserMembershipDoesNotExistForGroup(Error):
     message = "User is already a group member"
     internal_error_code = 1540106
+
+class UserorEmailExists(Error):
+    message = "Username or email already exists"
+    internal_error_code = 1540107

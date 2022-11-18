@@ -4,9 +4,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import bleach
-
+from rest_framework.exceptions import ValidationError
 from app_split.models import Service
 from app_split.services import user_services
+from utils.sanitization_utils import NoInputValue
+import errors as custom_errors
+from utils.error_utils import get_rest_validation_error_response, get_business_error_response
 
 class UserDetailView(APIView):
     
@@ -34,3 +37,35 @@ class UserDetailView(APIView):
 
         response_dict.update(user_dict)
         return Response(response_dict, status=status.HTTP_200_OK)
+
+class RegisterUserView(APIView):
+    
+        def post(self, request):
+        # Gather request body data
+            username = request.data.get('username', NoInputValue)
+            first_name = request.data.get('first_name', NoInputValue)
+            last_name = request.data.get('last_name', NoInputValue)
+            email = request.data.get('email', NoInputValue)
+            password = request.data.get('password', NoInputValue)
+            # Sanitize strings
+            # No string to sanitize
+
+            try:
+                user_model = user_services.create_user(username,first_name,last_name,email,password)        
+            except ValidationError as e:
+                return get_rest_validation_error_response(
+                    error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            except custom_errors.SubscriptionIdDoesNotExist as e:
+                return get_business_error_response(
+                    error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+            except custom_errors.UserorEmailExists as e:
+                return get_business_error_response(
+                    error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+            
+
+            response_dict = {
+                'username': user_model.id,
+                'email':user_model.email
+            }
+
+            return Response(data=response_dict, status=status.HTTP_201_CREATED)
