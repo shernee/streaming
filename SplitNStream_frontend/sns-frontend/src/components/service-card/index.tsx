@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { serviceShape } from 'data/type'
 import { Card, ListGroup, Table } from 'react-bootstrap'
-import 'components/home/service-card/index.css'
+import 'components/service-card/index.css'
 
 interface IServiceCard {
   services: serviceShape

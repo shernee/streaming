@@ -2,7 +2,7 @@ import { groupDetailShape } from 'data/type';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
-import 'components/common/group-information/index.css';
+import 'components/group-information/index.css';
 
 
 interface IGroupInformation {
