@@ -7,7 +7,7 @@ import bleach
 from rest_framework.exceptions import ValidationError
 from app_split.models import Service
 from app_split.services import user_services
-from utils.sanitization_utils import NoInputValue
+from utils.sanitization_utils import NoInputValue, strip_xss
 import errors as custom_errors
 from utils.error_utils import get_rest_validation_error_response, get_business_error_response
 
@@ -42,16 +42,27 @@ class RegisterUserView(APIView):
     
         def post(self, request):
         # Gather request body data
-            username = request.data.get('username', NoInputValue)
-            first_name = request.data.get('first_name', NoInputValue)
-            last_name = request.data.get('last_name', NoInputValue)
-            email = request.data.get('email', NoInputValue)
-            password = request.data.get('password', NoInputValue)
-            # Sanitize strings
-            # No string to sanitize
+            unsafe_username = request.data.get('username', NoInputValue)
+            unsafe_first_name = request.data.get('first_name', NoInputValue)
+            unsafe_last_name = request.data.get('last_name', NoInputValue)
+            unsafe_email = request.data.get('email', NoInputValue)
+            unsafe_password = request.data.get('password', NoInputValue)
+            # Sanitize 
+            
+            sanitized_username = strip_xss(unsafe_username)
+            sanitized_first_name = strip_xss(unsafe_first_name)
+            sanitized_last_name = strip_xss(unsafe_last_name)
+            sanitized_email = strip_xss(unsafe_email)
+
 
             try:
-                user_model = user_services.create_user(username,first_name,last_name,email,password)        
+                user_model = user_services.create_user(
+                    sanitized_username=sanitized_username,
+                    sanitized_first_name=sanitized_first_name,
+                    sanitized_last_name=sanitized_last_name,
+                    sanitized_email_address=sanitized_email,
+                    unsafe_password=unsafe_password,
+                    unsafe_is_admin=False)        
             except ValidationError as e:
                 return get_rest_validation_error_response(
                     error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
