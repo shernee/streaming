@@ -39,7 +39,7 @@ export const Register = () => {
         axios.post(registerUserUrl, registerUserPostData).then((resp) => {
           if(resp.status === 201) {
             const createuserid = resp.data.userid
-            navigate('/login')
+            navigate('/')
           } else {
             alert(`${resp.statusText}`)
           }
@@ -50,6 +50,11 @@ export const Register = () => {
             <div className='form-wrapper'>
                <h2>Sign Up</h2>
                <form onSubmit={registerUser} >
+                  <div className='username'>
+                     <label htmlFor="username">Username</label>
+                     <input type='text' name='username'
+                     onChange={(e) => {setUsername(e.target.value)}}/>
+                  </div>
                   <div className='firstname'>
                      <label htmlFor="first_name">First Name</label>
                      <input type='text' name='first_name'
