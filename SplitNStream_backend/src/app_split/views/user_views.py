@@ -66,14 +66,11 @@ class RegisterUserView(APIView):
                     unsafe_is_admin=False)        
 
             except ValidationError as e:
-                return get_rest_validation_error_response(
-                    error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
-            except custom_errors.SubscriptionIdDoesNotExist as e:
-                return get_business_error_response(
-                    error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
-            except custom_errors.UserorEmailExists as e:
-                return get_business_error_response(
-                    error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+                return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            except custom_errors.UsernameConflictError as e:
+                return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
+            except custom_errors.EmailConflictError as e:
+                return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
             
 
             response_dict = {
