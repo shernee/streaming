@@ -3,13 +3,13 @@ p, div {
   }
     
   .wrapper {
-    height: 97vh;
+    height: 99vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(6, 150, 30);
+    background-color: rgb(54, 62, 55);
   }
   
   .form-wrapper {
@@ -17,8 +17,8 @@ p, div {
     flex-direction: column;
     width: 280px;
     max-width: 80%;
-    min-width: 100px;
-    min-height: 400px;
+    min-width: 400px;
+    min-height: 600px;
     padding: 20px 40px;
     border-radius: 6px;
     box-shadow: 0px 8px 36px #222;
@@ -42,9 +42,10 @@ p, div {
   }  
   
   label {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.2em;
     color: #444;
     font-weight: lighter;
+    justify-content: center;
   }
   
   input {
@@ -52,12 +53,14 @@ p, div {
     border-radius: 5px;
     outline: none;
     border: 1px solid #d6d1d5;
+    justify-content: center;
   }
   
   input::placeholder {
     font-size: 1.2em;
     font-weight: lighter;
     color: #bbb;
+    justify-content: center;
   }
   
   button {
@@ -68,7 +71,7 @@ p, div {
     padding:  0.938em;
     border: none;
     border-radius: 4px;
-    background-color: rgb(22, 165, 58);
+    background-color: rgb(56, 60, 57);
     color: #fefefe;
   }
   button:hover {
@@ -76,14 +79,24 @@ p, div {
     color: #fefefe;
   }
    
-  .username,
   .email,
-  .password {
+  .password,
+  .username,
+  .firstname,
+  .lastname
+   {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+    flex-direction: column; 
+    margin-bottom: 5px;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+   
   }
+  /* margin-right: 9px;
+  display: inline-block;
+  width: 21%;
+  min-width: 30px; */
   
   .signup:hover { transform: scale(1.25);cursor: pointer;}
    

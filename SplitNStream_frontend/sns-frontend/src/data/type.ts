@@ -28,6 +28,12 @@ export interface groupListDetailsShape {
     current_num_members: number;
 }
 
+export interface groupListShape {
+    user_groups: Array<groupListDetailsShape>
+    other_groups: Array<groupListDetailsShape>
+}
+
+
 export interface groupDetailShape {
     group_id: number;
     subscription_name: string;

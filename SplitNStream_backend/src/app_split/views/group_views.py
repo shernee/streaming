@@ -27,19 +27,34 @@ class GroupListView(APIView):
         except custom_errors.SubscriptionIdDoesNotExist as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
         
-        groups_for_subscription = []
-        for group in group_qs:
+        user_groups_for_subscription = []
+        other_groups_for_subscription = []
+        user_groups_qs = group_qs.filter(members__id=request.user.id)
+        other_groups_qs = group_qs.exclude(members__id=request.user.id)
+        for group in user_groups_qs:
             curr_num = len(group.members.all())
             group_dict = {
                 "group": group.id,
                 "max_members": group.subscription.max_members_allowed,
                 "current_num_members": curr_num
             }
-            groups_for_subscription.append(group_dict)
+            user_groups_for_subscription.append(group_dict)
         
-        response_list =  groups_for_subscription
+        for group in other_groups_qs:
+            curr_num = len(group.members.all())
+            group_dict = {
+                "group": group.id,
+                "max_members": group.subscription.max_members_allowed,
+                "current_num_members": curr_num
+            }
+            other_groups_for_subscription.append(group_dict)
+        
+        response_dict = {
+            'user_groups': user_groups_for_subscription,
+            'other_groups': other_groups_for_subscription
+        }
 
-        return Response(data=response_list, status=status.HTTP_200_OK)
+        return Response(data=response_dict, status=status.HTTP_200_OK)
     
 class GroupCreateView(APIView):
 

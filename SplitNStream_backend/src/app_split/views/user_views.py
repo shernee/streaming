@@ -42,6 +42,7 @@ class RegisterUserView(APIView):
     
         def post(self, request):
         # Gather request body data
+
             unsafe_username = request.data.get('username', NoInputValue)
             unsafe_first_name = request.data.get('first_name', NoInputValue)
             unsafe_last_name = request.data.get('last_name', NoInputValue)
@@ -63,6 +64,7 @@ class RegisterUserView(APIView):
                     sanitized_email_address=sanitized_email,
                     unsafe_password=unsafe_password,
                     unsafe_is_admin=False)        
+
             except ValidationError as e:
                 return get_rest_validation_error_response(
                     error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)

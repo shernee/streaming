@@ -31,6 +31,7 @@ export const Register = () => {
         axios.post(registerUserUrl, registerUserPostData).then((resp) => {
           if(resp.status === 201) {
             console.log(resp)
+
             const createuserid = resp.data.userid
             navigate('/')
           } else {
