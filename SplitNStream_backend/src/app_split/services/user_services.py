@@ -40,7 +40,7 @@ def create_user(
         raise errors.EmailConflictError()
 
     # Create a user
-    user_model = User.objects.create(
+    user_model = User.objects.create_user(
         username=username,
         password=password,
         first_name=first_name,
