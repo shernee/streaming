@@ -63,7 +63,7 @@ class Payment(models.Model):
     group = models.ForeignKey('Group',on_delete=models.CASCADE)
     user = models.ForeignKey('User',on_delete=models.CASCADE)
     paid_on = models.DateTimeField()
-    amount_paid =models.IntegerField()
+    amount_paid =models.DecimalField(max_digits=7, decimal_places=2)
 
 
 

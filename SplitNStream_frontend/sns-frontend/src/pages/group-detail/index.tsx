@@ -38,14 +38,15 @@ export const GroupDetail = () => {
       group_stage: '',
       price_per_member: 0,
       is_member: false,
-      user_id: -1
+      user_id: -1,
+      user_paid: false,
     })
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate()
     const { groupId } = useParams()
   
     useEffect(() => {
-      const groupDetailUrl = `/api/group-detail/?group_id=${groupId}`
+      const groupDetailUrl = `/api/group-details/?group_id=${groupId}`
       const userDetailsUrl = `/api/user-details/`
       const loadData = async() => {
         const groupDetailResponse = await axios.get(groupDetailUrl)

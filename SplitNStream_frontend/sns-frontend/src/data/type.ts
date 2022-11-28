@@ -33,6 +33,10 @@ export interface groupListShape {
     other_groups: Array<groupListDetailsShape>
 }
 
+export interface groupDetailMembersShape {
+    username: string;
+    paid: boolean;
+}
 
 export interface groupDetailShape {
     group_id: number;
@@ -40,11 +44,12 @@ export interface groupDetailShape {
     service_name: string;
     subscription_price: number;
     max_members_allowed:number;
-    current_members: Array<string>;
+    current_members: Array<groupDetailMembersShape>;
     group_stage: string;
     price_per_member:number;
     is_member: boolean;
     user_id: number;
+    user_paid: boolean;
 }
 
 export interface SignUpShape {

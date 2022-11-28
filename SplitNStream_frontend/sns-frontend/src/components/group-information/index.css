@@ -45,6 +45,8 @@
 }
 
 .member-box {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     border-width: 1px;
     border-color: darkslateblue;
@@ -56,4 +58,10 @@
 .action-row {
     display: flex;
     justify-content: flex-end;
+    width: 100%;
+}
+
+.group-detail-action {
+    width: 20%;
+    margin-left: 5px;
 }

@@ -33,6 +33,9 @@ export const GroupInformation = (props: IGroupInformation) => {
       value: `$${group['price_per_member']}`
     }]
 
+  const showPayButton = group.is_member && !group.user_paid && group.group_stage==="Formed"
+  const showJoinButton = !group.is_member && group.group_stage === "Formation"
+  const showLeaveButton = group.is_member
 
   return (
     <div className='group-list-section'>
@@ -52,28 +55,59 @@ export const GroupInformation = (props: IGroupInformation) => {
       </div>
       <div className="group-member-info">
         <h6>Members</h6>
-        <div className="member-tray">
-          {
-            group.current_members.map(member => (
-              <div className='member-box'>
-                {member}
-              </div>
-            ))
-          }
-        </div>
+        {
+          group.group_stage === 'Formation' 
+          ?
+            <div className="member-tray">
+              {
+                group.current_members.map(member => (
+                  <div className='member-box'>
+                    {member.username}
+                  </div>
+                ))
+              }
+            </div>
+          :
+            <div className="member-tray">
+              {
+                group.current_members.map(member => (
+                  <div className='member-box'>
+                    <div className='member-username'>
+                      {member.username}
+                    </div>
+                    <div className='member-payment'>
+                      {member.paid ? 'Paid' : 'Not paid'}
+                    </div>
+                  </div>
+                ))
+              }
+            </div> 
+        }
       </div>
       <div className="action-row">
         {
-          !group.is_member ? (
-            group.group_stage === "Formation" &&
+          showJoinButton &&
+          <div className="group-detail-action"> 
             <Button variant="success" onClick={() => handleJoinGroup()}>
               Join
             </Button>
-          ) : (
+          </div>
+        }
+        {
+          showLeaveButton &&
+          <div className="group-detail-action"> 
             <Button variant="danger" onClick={() => handleLeaveGroup()}>
-              Leave group
+              Leave
             </Button>
-          )
+          </div>
+        }
+        {
+          showPayButton && 
+          <div className="group-detail-action"> 
+            <Button variant="primary" onClick={() => 'payment'}>
+                Pay
+            </Button> 
+          </div>
         }
       </div>
     </div>
