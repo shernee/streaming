@@ -93,17 +93,28 @@ class GroupDetailView(APIView):
 
         # Call service
         try:
-            group_model = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
+            group_model, payment_qs = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
         except ValidationError as e:
             return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         except custom_errors.GroupIdDoesNotExist as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
 
-
         members = []
         current_group_members = group_model.members.filter(membership__is_active=True)
-        for each in current_group_members:
-            members.append(each.username)
+        for member in current_group_members:
+            if member.id in payment_qs:
+                members.append({
+                    "username": member.username,
+                    "paid": True
+                })
+            else:
+                members.append({
+                    "username": member.username,
+                    "paid": False
+                })
+        
+        
+
         response_dict = {
             "group_id": group_model.id,
             "subscription_name": group_model.subscription.name,
@@ -114,8 +125,8 @@ class GroupDetailView(APIView):
             "group_stage": group_model.get_stage_display(),
             "price_per_member": round(group_model.subscription.price / group_model.subscription.max_members_allowed, 2),
             "is_member": request.user in current_group_members,
-            "user_id": request.user.id
-          
+            "user_id": request.user.id,
+            "user_paid": request.user.id in payment_qs
         }
                    
         return Response(data=response_dict, status=status.HTTP_200_OK)

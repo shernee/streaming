@@ -45,3 +45,16 @@ class GroupMemberLimitExceeded(Error):
 class UserMembershipDoesNotExistForGroup(Error):
     message = "User is already a group member"
     internal_error_code = 1540106
+
+
+#############################
+# 20. Payment View Errors #
+#############################
+
+class PaymentAmountMismatch(Error):
+    message = "The amount you have paid is not quite right"
+    internal_error_code = 2040101
+
+class GroupNotInFormedStage(Error):
+    message = "The Group is not in the FORMED Stage"
+    internal_error_code = 2040102

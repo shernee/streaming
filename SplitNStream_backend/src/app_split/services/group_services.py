@@ -2,7 +2,7 @@ import datetime
 
 from django.db import transaction
 
-from app_split.models import Group, User, Subscription, Membership
+from app_split.models import Group, User, Subscription, Membership, Payment
 from app_split.serializers import subscription_serializers, group_serializers
 import errors as custom_errors
 
@@ -81,11 +81,31 @@ def get_group_details(unsafe_group_id: int):
     if not Group.objects.filter(id=group_id).exists():
         raise custom_errors.GroupIdDoesNotExist()
 
+    
+    payment_qs = Payment.objects.filter(group_id=group_id).values_list('user__id', flat=True)
+
     # Get queryset of group details for given groupid
     group_model = Group.objects\
         .prefetch_related('subscription')\
         .get(id=group_id)
-    return group_model
+
+    current_group_members = group_model.members.filter(membership__is_active=True)
+    if (len(current_group_members) == group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMED):
+        group_model = Group.objects\
+            .prefetch_related('subscription')\
+            .get(id=group_id)
+        group_model.stage = Group.StageChoice.FORMED
+        group_model.save()
+            
+    
+    if (len(current_group_members) < group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMATION):
+        group_model = Group.objects\
+            .prefetch_related('subscription')\
+            .get(id=group_id)
+        group_model.stage = Group.StageChoice.FORMATION
+        group_model.save()
+
+    return group_model, payment_qs
 
 
 def join_group(request_user_model:User, unsafe_group_id:int):   
@@ -118,14 +138,25 @@ def join_group(request_user_model:User, unsafe_group_id:int):
 
     if len(group_members) >= group_model.subscription.max_members_allowed:
         raise custom_errors.GroupMemberLimitExceeded()
-            
-    # Create membership for user
-    membership_model = Membership.objects.create(
-        user=request_user_model,
-        group=group_model,
-        is_active=True,
-        start_date=datetime.datetime.now()
-    )
+
+    if len(group_members) == (group_model.subscription.max_members_allowed - 1):
+        with transaction.atomic():           
+            # Create membership for user
+            membership_model = Membership.objects.create(
+                user=request_user_model,
+                group=group_model,
+                is_active=True,
+                start_date=datetime.datetime.now()
+            )
+            # Update group stage to formed
+            Group.objects.filter(id=group_id).update(stage=Group.StageChoice.FORMED)
+    else:
+        membership_model = Membership.objects.create(
+                user=request_user_model,
+                group=group_model,
+                is_active=True,
+                start_date=datetime.datetime.now()
+            )
 
     return group_model
 
@@ -167,9 +198,16 @@ def leave_group(request_user_model:User, unsafe_group_id:int):
             group_model =  Group.objects.filter(id=group_id).delete()
 
     #Delete user instance if group still has active members in it
-    elif len(group_members) > 1 and len(group_members) <= group_model.subscription.max_members_allowed:
+    elif len(group_members) > 1 and len(group_members) < group_model.subscription.max_members_allowed:
         
         membership_model = Membership.objects.filter(user=request_user_model, group=group_model).delete()
+
+    elif len(group_members) == group_model.subscription.max_members_allowed:
+        with transaction.atomic():           
+            membership_model = Membership.objects.filter(user=request_user_model, group=group_model).delete()
+
+            # Update group stage to formation
+            Group.objects.filter(id=group_id).update(stage=Group.StageChoice.FORMATION)       
        
 
     return group_model
