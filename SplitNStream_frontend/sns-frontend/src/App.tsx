@@ -1,6 +1,7 @@
 import React from 'react';
 import { GroupDetail } from 'pages/group-detail';
 import { Groups } from 'pages/group-list';
+import { Payment } from 'pages/payment';
 import { Home } from 'pages/home';
 import { Login } from 'pages/login';
 import { Register } from 'pages/signup';
@@ -15,6 +16,7 @@ function App() {
         <Route path="/home" element={<Home />}/>
         <Route path="/group-list/:subscriptionId" element={<Groups />} />
         <Route path="/group-detail/:groupId" element={<GroupDetail />} />
+        <Route path="/pay-sub/:userId/:subscriptionId" element={<Payment />} />
         <Route path="/signup" element={<Register />} />
       </Routes>
     </div>

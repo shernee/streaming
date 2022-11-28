@@ -54,3 +54,11 @@ export interface SignUpShape {
     email : string,
     password : string,
  }
+
+ export interface paymentCardShape {
+    card_number : number,
+    user_name: string,
+    card_expiry: string,
+    card_cvc : number,
+    card_issuer : string,
+ }
