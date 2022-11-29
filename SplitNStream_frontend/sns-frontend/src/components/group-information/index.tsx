@@ -9,10 +9,11 @@ interface IGroupInformation {
   group: groupDetailShape;
   handleJoinGroup: Function;
   handleLeaveGroup: Function;
+  handleShowPaymentModal: Function;
 }
 
 export const GroupInformation = (props: IGroupInformation) => {
-  const { group, handleJoinGroup, handleLeaveGroup } = props
+  const { group, handleJoinGroup, handleLeaveGroup, handleShowPaymentModal } = props
   const navigate = useNavigate()
 
   const handleSelectGroup = (e: React.MouseEvent<Element, MouseEvent>, groupId: number) => {
@@ -76,7 +77,12 @@ export const GroupInformation = (props: IGroupInformation) => {
                       {member.username}
                     </div>
                     <div className='member-payment'>
-                      {member.paid ? 'Paid' : 'Not paid'}
+                      {member.paid 
+                        ? 
+                          <span className='paid-string'>Paid</span>
+                        : 
+                          <span className='notpaid-string'>Not paid</span>
+                      }
                     </div>
                   </div>
                 ))
@@ -104,7 +110,7 @@ export const GroupInformation = (props: IGroupInformation) => {
         {
           showPayButton && 
           <div className="group-detail-action"> 
-            <Button variant="primary" onClick={() => 'payment'}>
+            <Button variant="primary" onClick={() => handleShowPaymentModal()}>
                 Pay
             </Button> 
           </div>

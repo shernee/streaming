@@ -6,28 +6,6 @@ import { Dashboard } from 'components/dashboard'
 import { ServiceCard } from 'components/service-card'
 import 'pages/home/index.css'
 
-const services = {
-  "Netflix": [
-      {
-          "subscription_id": 1,
-          "name": "Monthly",
-          "price": 20.0
-      },
-      {
-        "subscription_id": 3,
-        "name": "Monthly",
-        "price": 20.0
-    }
-  ],
-  "Hulu": [
-      {
-          "subscription_id": 2,
-          "name": "Monthly",
-          "price": 15.0
-      }
-  ]
-}
-
 export const Home = () => {
   const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
   const [services, setServices] = useState<serviceShape>({'': []})
@@ -39,7 +17,6 @@ export const Home = () => {
     const loadData = async() => {
       const serviceResponse = await axios.get(subscriptionsUrl)
       const userDetailsResponse = await axios.get(userDetailsUrl)
-      console.log(`Service data: ${JSON.stringify(serviceResponse)}`)
       setUser(userDetailsResponse.data)
       setServices(serviceResponse.data)
     }

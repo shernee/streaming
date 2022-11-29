@@ -23,7 +23,7 @@ const groupList = [
 
 export const Groups = () => {
   const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
-  const [groupList, setGroupList] = useState<groupListShape>({user_groups: [], other_groups: []})
+  const [groupList, setGroupList] = useState<groupListShape>({all_groups: []})
 
   const { subscriptionId } = useParams()
   const navigate = useNavigate()
@@ -63,38 +63,18 @@ export const Groups = () => {
           <h4>Groups in subscription</h4>
         </div>
           {
-            groupList['user_groups'].length > 0
+            groupList['all_groups'].length > 0
               ? (
                 <div className='groupType-list-section'>
-                  <h6>Your groups</h6>
-                      <SubscriptionGroups groupType='user' groups={groupList['user_groups']} handleCreateGroup={handleCreateGroup}/>
+                      <SubscriptionGroups groups={groupList['all_groups']} handleCreateGroup={handleCreateGroup}/>
                 </div>
                 )
               : (
                 <div> 
-                  You aren't a member of any group for this subscription!
+                  No groups have been created for this subscription yet!
                 </div>
               )
-          }
-          {
-            groupList['other_groups'].length > 0
-              ? (
-                <div className='groupType-list-section'>
-                  <h6>Other groups</h6>
-                  <SubscriptionGroups groupType='other' groups={groupList['other_groups']} handleCreateGroup={handleCreateGroup}/> 
-                </div>
-                )
-              : (
-                <div> 
-                  No other groups!
-                </div>
-              )
-          }  
-          <div className="action-row">
-            <Button variant="success" onClick={() => handleCreateGroup()}>
-              Create Group
-            </Button>
-          </div>  
+          } 
       </div>
     </div>
   )

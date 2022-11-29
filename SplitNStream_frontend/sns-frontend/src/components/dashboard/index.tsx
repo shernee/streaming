@@ -5,6 +5,10 @@ import { ListGroup } from 'react-bootstrap'
 import { userShape, userGroupShape } from  'data/type'
 import 'components/dashboard/index.css'
 
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true
+
 interface IDashboardProps {
     user: userShape
 }
@@ -28,6 +32,17 @@ export const Dashboard = (props: IDashboardProps) => {
         ))}
       </div>
     )
+  }
+
+  const handleLogout = () => {
+    const logoutUrl = '/api/auth/logout/'
+    axios.post(logoutUrl).then((logoutResponse) => {
+      if(logoutResponse.status === 202) {
+        navigate('/')
+      }   
+    }).catch(error => {
+      console.log('Not logged out')
+    })
   }
 
   return (
@@ -58,6 +73,9 @@ export const Dashboard = (props: IDashboardProps) => {
                 )
               } 
               </div> 
+          </div>
+          <div className="user-logout" onClick={() => handleLogout()}>
+            <h4>Logout</h4>
           </div>     
       </div>
   )

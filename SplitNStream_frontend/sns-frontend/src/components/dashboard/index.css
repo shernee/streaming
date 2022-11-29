@@ -39,6 +39,9 @@
     display: flex;
     flex-direction: column;
     padding: 5px;
+    border-bottom: 0.5px;
+    border-bottom-color: darkslateblue;
+    border-bottom-style: solid;
 }
 
 .user-group-header {
@@ -62,6 +65,11 @@
 }
 
 .group-name:hover {
+    cursor: pointer;
+    color: darkslateblue;
+}
+
+.user-logout:hover {
     cursor: pointer;
     color: darkslateblue;
 }

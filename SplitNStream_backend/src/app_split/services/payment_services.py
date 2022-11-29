@@ -25,7 +25,7 @@ def make_payment(request_user_model: User, unsafe_group_id: int, unsafe_payment_
         .get(id=group_id)
 
     # Check if group id exists
-    if not group_model.exists():
+    if not Group.objects.filter(id=group_id).exists():
         raise custom_errors.GroupIdDoesNotExist()
 
     if group_model.stage != Group.StageChoice.FORMED:
@@ -69,3 +69,5 @@ def make_payment(request_user_model: User, unsafe_group_id: int, unsafe_payment_
                 amount_paid=payment_amount,
                 paid_on=datetime.datetime.now()
             ) 
+
+        return payment_model

@@ -25,7 +25,7 @@ def list_groups_for_subscription(unsafe_subscription_id: int):
 
     # Get queryset of groups for subscription
     group_qs = Group.objects\
-        .filter(subscription_id=subscription_id, stage=Group.StageChoice.FORMATION)\
+        .filter(subscription_id=subscription_id)\
         .prefetch_related('members')
     
     return group_qs

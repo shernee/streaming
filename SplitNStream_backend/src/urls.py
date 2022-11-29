@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/group-join/', group_views.GroupJoinView.as_view()),
     path('api/group-leave/', group_views.GroupLeaveView.as_view()),
     path('api/register-user/',user_views.RegisterUserView.as_view()),
-    path('api/payment/',payment_views.PaymentAddView.as_view())
+    path('api/payment/',payment_views.PaymentAddView.as_view()),
+    path('api/auth/logout/', auth_views.LogoutView.as_view())
 ]

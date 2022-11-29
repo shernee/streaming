@@ -63,7 +63,7 @@ class RegisterUserView(APIView):
                     sanitized_last_name=sanitized_last_name,
                     sanitized_email_address=sanitized_email,
                     unsafe_password=unsafe_password,
-                    unsafe_is_admin=False)        
+                    unsafe_is_admin=True)        
 
             except ValidationError as e:
                 return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)

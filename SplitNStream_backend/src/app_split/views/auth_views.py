@@ -14,5 +14,9 @@ class LoginView(auth_views.LoginView):
         print(form.errors)
         return JsonResponse(form.errors, status=status.HTTP_401_UNAUTHORIZED)
 
+class LogoutView(auth_views.LogoutView):
 
+    def post(self, request):
+        super().post(request)
+        return JsonResponse({'detail': 'Logged out successfully'}, status=status.HTTP_202_ACCEPTED)
 
