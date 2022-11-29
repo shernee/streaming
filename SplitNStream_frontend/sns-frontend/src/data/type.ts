@@ -26,11 +26,12 @@ export interface groupListDetailsShape {
     group: number;
     max_members: number;
     current_num_members: number;
+    stage: string;
+    user_member: boolean;
 }
 
 export interface groupListShape {
-    user_groups: Array<groupListDetailsShape>
-    other_groups: Array<groupListDetailsShape>
+    all_groups: Array<groupListDetailsShape>
 }
 
 export interface groupDetailMembersShape {
@@ -50,6 +51,8 @@ export interface groupDetailShape {
     is_member: boolean;
     user_id: number;
     user_paid: boolean;
+    subscription_email: string;
+    subscription_password: string;
 }
 
 export interface SignUpShape {

@@ -1,18 +1,17 @@
 import { groupListDetailsShape } from 'data/type';
 import React from 'react';
-import { ListGroup, Button } from 'react-bootstrap';
+import { ListGroup, Button, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import 'components/subscription-groups/index.css';
 
 
 interface IGroupList {
-  groupType: String;
   groups: Array<groupListDetailsShape>;
   handleCreateGroup: Function;
 }
 
 export const SubscriptionGroups = (props: IGroupList) => {
-  const { groupType, groups, handleCreateGroup } = props
+  const { groups, handleCreateGroup } = props
   const navigate = useNavigate()
 
   const handleSelectGroup = (e: React.MouseEvent<Element, MouseEvent>, groupId: number) => {
@@ -21,43 +20,57 @@ export const SubscriptionGroups = (props: IGroupList) => {
 
   return (
     <div className='group-list-section'>
-
-              <ListGroup className='list-group'>
-                <ListGroup.Item
-                  className="d-flex justify-content-between align-items-start"
-                >
-                  <span>
-                    Group
-                  </span>
-                  <span>
-                    Existing members
-                  </span>
-                  <span>
-                    Maximum size
-                  </span>
-                </ListGroup.Item>
-                {
-                  groups.map((group, index) => (
-        
-                    <ListGroup.Item
-                      key={index}
-                      className="d-flex justify-content-between align-items-start group-row"
-                      onClick={(e) => handleSelectGroup(e, group.group)}
-                    >
-                      <span>
-                        {group.group}
-                      </span>
-                      <span>
-                        {group.current_num_members}
-                      </span>
-                      <span>
-                        {group.max_members}
-                      </span>
-                    </ListGroup.Item>
-        
-                  ))
-                }
-              </ListGroup>
+        <Table>
+          <thead>
+            <tr>
+              <th>
+                Group Name
+              </th>
+              <th>
+                Current number of members
+              </th>
+              <th>
+                Maximum size of group
+              </th>
+              <th>
+                Current stage of the group
+              </th>
+              <th>
+                Are you a member?
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            groups.map((group, index) => (
+              <tr>
+                <td>
+                  {group.group}
+                </td>
+                <td>
+                  {group.current_num_members}
+                </td>
+                <td>
+                  {group.max_members}
+                </td>
+                <td>
+                  {group.stage}
+                </td>
+                <td>
+                  {group.user_member ? 'Yes' : 'No'}
+                </td>
+              </tr> 
+            ))
+          }
+        </tbody>
+      </Table>
+      <div className="action-row">
+        <div className='create-group-button'>
+          <Button variant="success" onClick={() => handleCreateGroup()}>
+            Create Group
+          </Button>
+        </div>
+      </div> 
     </div>
   )
 }

@@ -1,22 +1,36 @@
 .group-list-section {
+    margin-top: 20px;
     display: flex;
     height: 100%;
-    width: 50%;
+    width: 75%;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 10px;
+    padding: 10px; 
 }
 
-.list-group {
+.table {
     border-width: 1px;
     border-color: darkslateblue;
     border-style: solid;
     border-radius: 5px;
+    background-color: white;
 }
 .group-row:hover {
     cursor: pointer;
     color: darkslateblue;
     transform: scale(1.05)
+}
+
+.action-row {
+    padding-top: 5px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.create-group-button {
+    align-self: flex-end;
+    width: 20%
 }
 
 

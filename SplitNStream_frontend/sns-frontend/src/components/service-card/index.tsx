@@ -25,7 +25,6 @@ export const ServiceCard = (props: IServiceCard) => {
               <Card.Title>
                 {service}
               </Card.Title>
-              <Card.Text>
                 <Table borderless>
                   {
                     services[service].map((subscription) => (
@@ -44,7 +43,6 @@ export const ServiceCard = (props: IServiceCard) => {
                     ))
                   }
                 </Table>
-              </Card.Text>
             </Card.Body>
           </Card>
         ))

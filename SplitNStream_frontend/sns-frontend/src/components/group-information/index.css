@@ -44,6 +44,14 @@
     flex-direction: row;
 }
 
+.paid-string {
+    color: green;
+}
+
+.notpaid-string {
+    color: red;
+}
+
 .member-box {
     display: flex;
     flex-direction: column;

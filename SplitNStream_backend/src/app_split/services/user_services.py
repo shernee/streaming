@@ -56,7 +56,6 @@ def create_user(
 def list_userdetails(request_user_model: User):
 
     user_groups_qs = request_user_model\
-        .group_set.prefetch_related("subscription")\
-        .filter(membership__is_active=True)      
+        .group_set.prefetch_related("subscription")   
 
     return user_groups_qs

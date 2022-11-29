@@ -16,7 +16,6 @@ function App() {
         <Route path="/home" element={<Home />}/>
         <Route path="/group-list/:subscriptionId" element={<Groups />} />
         <Route path="/group-detail/:groupId" element={<GroupDetail />} />
-        <Route path="/pay-sub/:userId/:subscriptionId" element={<Payment />} />
         <Route path="/signup" element={<Register />} />
       </Routes>
     </div>

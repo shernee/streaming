@@ -6,25 +6,12 @@ import { userShape, groupDetailShape } from 'data/type'
 import { Dashboard } from 'components/dashboard'
 import { GroupInformation } from 'components/group-information';
 import 'pages/group-detail/index.css'
+import { Payment } from 'pages/payment'
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.withCredentials = true
 
-// const groupDetail = {
-//   "group_id": 1,
-//   "subscription_name": "Monthly",
-//   "service_name": "Hulu",
-//   "subscription_price": 15.0,
-//   "max_members_allowed": 4,
-//   "current_members": [
-//       "neetha"
-//   ],
-//   "group_stage": "Formation",
-//   "price_per_member": 3.75,
-//   "is_member": true,
-//   "user_id": 1
-// }
 
 export const GroupDetail = () => {
     const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
@@ -40,8 +27,11 @@ export const GroupDetail = () => {
       is_member: false,
       user_id: -1,
       user_paid: false,
+      subscription_email: '',
+      subscription_password: ''
     })
-    const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     const navigate = useNavigate()
     const { groupId } = useParams()
   
@@ -60,7 +50,7 @@ export const GroupDetail = () => {
 
     const handleLeaveGroup = () => {
       if(groupDetail.current_members.length === 1){
-        setShowModal(true)
+        setShowDeleteModal(true)
       } else {
         callLeaveGroupApi()
       }
@@ -92,6 +82,28 @@ export const GroupDetail = () => {
       })
     }
 
+    const handleShowPaymentModal = () => {
+      setShowPaymentModal(true)
+    }
+
+    const handleMakePayment = () => {
+      const paymentUrl = `/api/payment/`
+      const paymentPostData = {
+        group_id: groupId,
+        payment_amount: groupDetail.price_per_member,
+      }
+      axios.post(paymentUrl, paymentPostData).then((resp) => {
+        if(resp.status === 201) {
+          console.log(resp)
+          const createPaymentId= resp.data.paymentId
+          setShowPaymentModal(false)
+          window.location.reload()
+        } else {
+          alert(`${resp.statusText}`)
+        }
+      })
+    }
+
   
   
     return (
@@ -102,8 +114,9 @@ export const GroupDetail = () => {
             group={groupDetail} 
             handleJoinGroup={handleJoinGroup} 
             handleLeaveGroup={handleLeaveGroup} 
+            handleShowPaymentModal={handleShowPaymentModal}
           /> 
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
             <Modal.Dialog>
               <Modal.Header>
                 <Modal.Title> Your group will be deleted</Modal.Title>
@@ -112,11 +125,17 @@ export const GroupDetail = () => {
                 <p>You are the only member of the group. Your group will be deleted once you leave!</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="danger" onClick={() => setShowModal(false)}>Don't leave</Button>
+                <Button variant="danger" onClick={() => setShowDeleteModal(false)}>Don't leave</Button>
                 <Button variant="primary" onClick={() => callLeaveGroupApi()}>Leave group</Button>
               </Modal.Footer>
             </Modal.Dialog> 
-          </Modal>      
+          </Modal>
+          <Payment 
+            setShowPaymentModal={setShowPaymentModal} 
+            showPaymentModal={showPaymentModal}
+            handleMakePayment={handleMakePayment}
+            amountToPay={groupDetail.price_per_member}
+          />      
         </div>
       </div>
     )

@@ -79,6 +79,7 @@ p, div {
     color: #fefefe;
   }
    
+  .amount,
   .card_number,
   .card_cvc,
   .card_expiry,

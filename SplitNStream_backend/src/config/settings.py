@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['splitnshare.local', '127.0.0.1', 'localhost']
 
-
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 

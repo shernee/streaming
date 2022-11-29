@@ -27,31 +27,21 @@ class GroupListView(APIView):
         except custom_errors.SubscriptionIdDoesNotExist as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
         
-        user_groups_for_subscription = []
-        other_groups_for_subscription = []
-        user_groups_qs = group_qs.filter(members__id=request.user.id)
-        other_groups_qs = group_qs.exclude(members__id=request.user.id)
-        for group in user_groups_qs:
-            curr_num = len(group.members.all())
+        all_groups = []
+        for group in group_qs:
+            group_members = group.members.all()
             group_dict = {
                 "group": group.id,
                 "max_members": group.subscription.max_members_allowed,
-                "current_num_members": curr_num
+                "current_num_members": len(group_members),
+                "stage": group.get_stage_display(),
+                "user_member": request.user in group_members
             }
-            user_groups_for_subscription.append(group_dict)
-        
-        for group in other_groups_qs:
-            curr_num = len(group.members.all())
-            group_dict = {
-                "group": group.id,
-                "max_members": group.subscription.max_members_allowed,
-                "current_num_members": curr_num
-            }
-            other_groups_for_subscription.append(group_dict)
+            all_groups.append(group_dict)
+    
         
         response_dict = {
-            'user_groups': user_groups_for_subscription,
-            'other_groups': other_groups_for_subscription
+            'all_groups': all_groups,
         }
 
         return Response(data=response_dict, status=status.HTTP_200_OK)
@@ -111,9 +101,13 @@ class GroupDetailView(APIView):
                 members.append({
                     "username": member.username,
                     "paid": False
-                })
+                })       
         
-        
+        subscription_email = ""
+        subscription_password = ""
+        if group_model.stage == 3:
+            subscription_email = group_model.subscription_email
+            subscription_password = group_model.subscription_password
 
         response_dict = {
             "group_id": group_model.id,
@@ -126,8 +120,11 @@ class GroupDetailView(APIView):
             "price_per_member": round(group_model.subscription.price / group_model.subscription.max_members_allowed, 2),
             "is_member": request.user in current_group_members,
             "user_id": request.user.id,
-            "user_paid": request.user.id in payment_qs
+            "user_paid": request.user.id in payment_qs,
+            "subscription_email": subscription_email,
+            "subscription_password": subscription_password
         }
+
                    
         return Response(data=response_dict, status=status.HTTP_200_OK)
 
@@ -141,11 +138,11 @@ class GroupJoinView(APIView):
         # Sanitize strings
         # No string to sanitize
     
-        group_model = group_services.join_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
+        
 
         # Call service
         try:
-            group_model = group_services.get_group_details(unsafe_group_id=unsafe_group_id)
+            group_model = group_services.join_group(request_user_model=request.user, unsafe_group_id=unsafe_group_id)
         except ValidationError as e:
             return get_rest_validation_error_response(error=e, http_status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
         except custom_errors.GroupIdDoesNotExist as e:
