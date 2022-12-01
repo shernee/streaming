@@ -4,7 +4,7 @@
     flex-direction: column;
     padding: 10px;
     border-width: 1px;
-    border-color: darkslateblue;
+    border-color: rgb(100, 156, 156);
     border-style: solid;
     border-radius: 10px;
     background-color: white;
@@ -33,7 +33,7 @@
     justify-items: flex-start;
     padding: 10px;
     border-width: 1px;
-    border-color: darkslateblue;
+    border-color: rgb(100, 156, 156);
     border-style: solid;
     border-radius: 10px;
     background-color: white;
@@ -58,7 +58,7 @@
     flex-direction: column;
     padding: 10px;
     border-width: 1px;
-    border-color: darkslateblue;
+    border-color: rgb(100, 156, 156);
     border-style: solid;
     border-radius: 10px;
     margin: 5px;

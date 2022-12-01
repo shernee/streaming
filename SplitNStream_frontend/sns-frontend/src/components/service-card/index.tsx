@@ -3,6 +3,10 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { serviceShape } from 'data/type'
 import { Card, ListGroup, Table } from 'react-bootstrap'
 import 'components/service-card/index.css'
+import disney from 'assets/disney.jpg'
+import hulu from 'assets/hulu.jpg'
+import netflix from 'assets/netflix.jpg'
+import prime from 'assets/prime.png'
 
 interface IServiceCard {
   services: serviceShape
@@ -21,6 +25,7 @@ export const ServiceCard = (props: IServiceCard) => {
       {
         Object.keys(services).map((service, index) => (
           <Card key={index}>
+            {/* <Card.Img variant="top" src= {disney}/> */}
             <Card.Body>
               <Card.Title>
                 {service}

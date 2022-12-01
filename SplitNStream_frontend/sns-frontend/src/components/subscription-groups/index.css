@@ -10,14 +10,15 @@
 
 .table {
     border-width: 1px;
-    border-color: darkslateblue;
+    border-color: rgb(100, 156, 156);
     border-style: solid;
     border-radius: 5px;
     background-color: white;
 }
 .group-row:hover {
     cursor: pointer;
-    color: darkslateblue;
+    color: rgb(100, 156, 156);
+    transform: scale(1.05)
     text-decoration: underline;
 }
 
