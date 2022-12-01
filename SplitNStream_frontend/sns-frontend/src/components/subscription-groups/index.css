@@ -19,6 +19,7 @@
     cursor: pointer;
     color: rgb(100, 156, 156);
     transform: scale(1.05)
+    text-decoration: underline;
 }
 
 .action-row {

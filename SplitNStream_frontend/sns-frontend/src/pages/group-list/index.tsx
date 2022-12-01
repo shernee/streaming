@@ -24,6 +24,7 @@ const groupList = [
 export const Groups = () => {
   const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
   const [groupList, setGroupList] = useState<groupListShape>({all_groups: []})
+  const [errors, setErrors] = useState("")
 
   const { subscriptionId } = useParams()
   const navigate = useNavigate()
@@ -49,10 +50,10 @@ export const Groups = () => {
       if(resp.status === 201) {
         const createdGroupId = resp.data.group_id
         navigate(`/group-detail/${createdGroupId}`)
-      } else {
-        alert(`${resp.statusText}`)
       }
-    })
+      }).catch(error => {
+        setErrors(error.response.data.message)
+      })
   }
 
   return (

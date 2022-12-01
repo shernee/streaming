@@ -62,3 +62,7 @@ input:focus{
     position: absolute;
     transform: scale(0);
 }
+
+.error-text {
+    color: red;
+  }

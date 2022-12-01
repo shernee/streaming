@@ -16,11 +16,11 @@ export const GroupInformation = (props: IGroupInformation) => {
   const { group, handleJoinGroup, handleLeaveGroup, handleShowPaymentModal } = props
   const navigate = useNavigate()
 
-  const handleSelectGroup = (e: React.MouseEvent<Element, MouseEvent>, groupId: number) => {
-    navigate(`/group-detail/${groupId}`)
-  }
-
   const detailsToDisplay = [
+    {
+      label: 'Group',
+      value: `${group['group_name']}`
+    },
     {
       label: 'Subscription',
       value: `${group['subscription_name']} subscription for ${group['service_name']}`
@@ -37,6 +37,7 @@ export const GroupInformation = (props: IGroupInformation) => {
   const showPayButton = group.is_member && !group.user_paid && group.group_stage==="Formed"
   const showJoinButton = !group.is_member && group.group_stage === "Formation"
   const showLeaveButton = group.is_member
+  const showSubscriptionCredentials = group.is_member && group.group_stage === "Verified"
 
   return (
     <div className='group-list-section'>
@@ -90,6 +91,19 @@ export const GroupInformation = (props: IGroupInformation) => {
             </div> 
         }
       </div>
+      <div className="subscription-credentials-section">
+        {
+          showSubscriptionCredentials &&
+            <div className="detail-row">
+              <div className='detail-info-header'>
+                {group.subscription_email}
+              </div>
+              <div className='detail-info-text'>
+                {group.subscription_password}
+              </div>
+            </div>
+        }
+        </div>
       <div className="action-row">
         {
           showJoinButton &&

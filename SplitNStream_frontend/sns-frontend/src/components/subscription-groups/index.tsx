@@ -1,7 +1,7 @@
-import { groupListDetailsShape } from 'data/type';
+import { groupListDetailsShape, GroupStage } from 'data/type';
 import React from 'react';
 import { ListGroup, Button, Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { RouterProvider, useNavigate } from 'react-router-dom';
 import 'components/subscription-groups/index.css';
 
 
@@ -42,10 +42,10 @@ export const SubscriptionGroups = (props: IGroupList) => {
           </thead>
           <tbody>
           {
-            groups.map((group, index) => (
-              <tr>
+            groups.map((group) => (
+              <tr key={group.group_id} className="group-row" onClick={(e) => handleSelectGroup(e, group.group_id)}>
                 <td>
-                  {group.group}
+                  {group.group_name}
                 </td>
                 <td>
                   {group.current_num_members}
@@ -54,7 +54,7 @@ export const SubscriptionGroups = (props: IGroupList) => {
                   {group.max_members}
                 </td>
                 <td>
-                  {group.stage}
+                  {GroupStage[group.stage as keyof typeof GroupStage]}
                 </td>
                 <td>
                   {group.user_member ? 'Yes' : 'No'}

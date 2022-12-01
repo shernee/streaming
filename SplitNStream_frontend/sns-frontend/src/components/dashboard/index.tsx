@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap'
-import { userShape, userGroupShape } from  'data/type'
+import { userShape, userGroupShape, GroupStage } from  'data/type'
 import 'components/dashboard/index.css'
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -24,10 +24,10 @@ export const Dashboard = (props: IDashboardProps) => {
   const groupsInStage = (stage: string, groups: Array<userGroupShape>) => {
     return (
       <div className="groups-in-stage">
-        <h6>{ stage }</h6>
+        <h5>{ GroupStage[stage as keyof typeof GroupStage] }</h5>
         {groups.map(group => (
-          <div key={group.group} className="group-name" onClick={(e) => handleSelectUserGroup(e, group.group)}> 
-            {group.subscription }
+          <div key={group.group_id} className="group-name" onClick={(e) => handleSelectUserGroup(e, group.group_id)}> 
+            {group.group_name }
           </div>
         ))}
       </div>
@@ -55,7 +55,7 @@ export const Dashboard = (props: IDashboardProps) => {
             <span>{user?.email}</span>
           </div>
           <div className="user-groups">
-            <h5 className="user-group-header">Your groups</h5>
+            <h4 className="user-group-header">Your groups</h4>
               <div className="stage-section">
               {
                 !!user.Formation && (

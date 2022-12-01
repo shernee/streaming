@@ -89,21 +89,21 @@ def get_group_details(unsafe_group_id: int):
         .prefetch_related('subscription')\
         .get(id=group_id)
 
-    current_group_members = group_model.members.filter(membership__is_active=True)
-    if (len(current_group_members) == group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMED):
-        group_model = Group.objects\
-            .prefetch_related('subscription')\
-            .get(id=group_id)
-        group_model.stage = Group.StageChoice.FORMED
-        group_model.save()
+    # current_group_members = group_model.members.filter(membership__is_active=True)
+    # if (len(current_group_members) == group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMED):
+    #     group_model = Group.objects\
+    #         .prefetch_related('subscription')\
+    #         .get(id=group_id)
+    #     group_model.stage = Group.StageChoice.FORMED
+    #     group_model.save()
             
     
-    if (len(current_group_members) < group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMATION):
-        group_model = Group.objects\
-            .prefetch_related('subscription')\
-            .get(id=group_id)
-        group_model.stage = Group.StageChoice.FORMATION
-        group_model.save()
+    # if (len(current_group_members) < group_model.subscription.max_members_allowed) and (group_model.stage != Group.StageChoice.FORMATION):
+    #     group_model = Group.objects\
+    #         .prefetch_related('subscription')\
+    #         .get(id=group_id)
+    #     group_model.stage = Group.StageChoice.FORMATION
+    #     group_model.save()
 
     return group_model, payment_qs
 
@@ -187,7 +187,7 @@ def leave_group(request_user_model:User, unsafe_group_id:int):
     if request_user_model not in group_members:
         raise custom_errors.UserMembershipDoesNotExistForGroup()
 
-    if len(group_members) >= group_model.subscription.max_members_allowed:
+    if len(group_members) > group_model.subscription.max_members_allowed:
         raise custom_errors.GroupMemberLimitExceeded()
 
     #If there is only one user left in the group, delete both membership instance and group 

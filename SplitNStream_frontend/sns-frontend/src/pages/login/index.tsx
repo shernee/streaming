@@ -15,8 +15,9 @@ export const Login = () => {
   const [errors, setErrors] = useState("")
 
   useEffect(() => {
+    console.log('in login')
     const loginUrl = `/api/auth/login/`
-    axios.get(loginUrl)
+    axios.get(loginUrl).then((r)=>{console.log(r)})
   }, [])
 
   const handleLogin = (e: React.SyntheticEvent) => {
@@ -33,7 +34,7 @@ export const Login = () => {
           navigate('/home')
         }   
       }).catch(error => {
-        setErrors("Please enter the right username and password")
+        setErrors(error.response.data.message)
       })
       
     }
@@ -57,7 +58,7 @@ export const Login = () => {
           placeholder='password' 
           onChange={(e) => {setPassword(e.target.value)}}
           />
-          {!!errors && <p>{errors}</p>}
+          {!!errors && <p className="error-text">{errors}</p>}  
           <div className="login-btn" onClick={(e) => handleLogin(e)}>Login</div>
           <span className='signup' onClick={e => navigate('/signup')}>Not a member yet? Signup!</span>
       </div>
