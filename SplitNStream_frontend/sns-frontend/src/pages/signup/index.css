@@ -78,10 +78,6 @@ p, div {
     background-color:rgb(100, 156, 156);
     
   }
-  /* button:hover {
-    background-color: rgb(156, 236, 161);
-    color: #fefefe;
-  } */
    
   .email,
   .password,
@@ -97,12 +93,6 @@ p, div {
     align-items: center;
    
   }
-  /* margin-right: 9px;
-  display: inline-block;
-  width: 21%;
-  min-width: 30px; */
-  
-  /* .signup:hover { transform: scale(1.25);cursor: pointer;text-decoration: underline;} */
    
   .submit {
     width: 100%;

@@ -68,6 +68,7 @@ class GroupCreateView(APIView):
 
         response_dict = {
             'group_id': group_model.id,
+            "group_name": f'{group_model.subscription.service.name}-{group_model.id}',
         }
 
         return Response(data=response_dict, status=status.HTTP_201_CREATED)

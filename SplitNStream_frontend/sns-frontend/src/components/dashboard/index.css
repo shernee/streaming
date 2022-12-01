@@ -62,7 +62,8 @@
 }
 
 .group-name {
-    margin: 5px !important
+    margin: 10px !important;
+    padding-left: 10px;
 }
 
 .group-name:hover {
@@ -73,4 +74,8 @@
 .user-logout:hover {
     cursor: pointer;
     color: rgb(100, 156, 156);
+}
+
+.nothin-to-show {
+    color: red;
 }

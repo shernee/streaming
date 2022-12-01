@@ -91,9 +91,9 @@ export const GroupInformation = (props: IGroupInformation) => {
             </div> 
         }
       </div>
-      <div className="subscription-credentials-section">
-        {
-          showSubscriptionCredentials &&
+      {
+        showSubscriptionCredentials &&
+          <div className="subscription-credentials-section">
             <div className="detail-row">
               <div className='detail-info-header'>
                 {group.subscription_email}
@@ -101,9 +101,9 @@ export const GroupInformation = (props: IGroupInformation) => {
               <div className='detail-info-text'>
                 {group.subscription_password}
               </div>
-            </div>
-        }
+            </div>      
         </div>
+      }
       <div className="action-row">
         {
           showJoinButton &&
