@@ -22,7 +22,8 @@ class UserDetailView(APIView):
         for group_model in groups_qs:
             stage_name = group_model.get_stage_display()
             group_details_dict = {
-                "group": group_model.id,
+                "group_id": group_model.id,
+                "group_name": f'{group_model.subscription.service.name}-{group_model.id}',
                 "subscription": f'{group_model.subscription.service.name}: {group_model.subscription.name}'
             }
 

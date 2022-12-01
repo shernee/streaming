@@ -18,7 +18,7 @@
 .group-row:hover {
     cursor: pointer;
     color: darkslateblue;
-    transform: scale(1.05)
+    text-decoration: underline;
 }
 
 .action-row {

@@ -47,7 +47,7 @@ def make_payment(request_user_model: User, unsafe_group_id: int, unsafe_payment_
         if member.id in payment_qs:
             paid_members.append(member.username)
 
-    if len(paid_members) == len(current_group_members):
+    if len(paid_members) == len(current_group_members)-1:
         with transaction.atomic():
 
             # Create payment
