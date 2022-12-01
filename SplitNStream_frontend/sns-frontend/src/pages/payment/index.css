@@ -9,7 +9,7 @@ p, div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(54, 62, 55);
+    background-color: white;
   }
   
   .form-wrapper {
@@ -22,7 +22,8 @@ p, div {
     padding: 20px 40px;
     border-radius: 6px;
     box-shadow: 0px 8px 36px #222;
-    background-color: #fefefe;
+    box-shadow: 0px 8px 36px rgb(173, 179, 179);
+    background-color:rgb(241, 235, 235);
   }
   
   .form-wrapper > h2 {
@@ -71,14 +72,8 @@ p, div {
     padding:  0.938em;
     border: none;
     border-radius: 4px;
-    background-color: rgb(56, 60, 57);
-    color: #fefefe;
+    background-color:rgb(100, 156, 156);
   }
-  button:hover {
-    background-color: rgb(6, 73, 11);
-    color: #fefefe;
-  }
-   
   .amount,
   .card_number,
   .card_cvc,
@@ -94,12 +89,6 @@ p, div {
     align-items: center;
    
   }
-  /* margin-right: 9px;
-  display: inline-block;
-  width: 21%;
-  min-width: 30px; */
-  
-  .pay:hover { transform: scale(1.25);cursor: pointer;}
    
   .pay {
     width: 100%;

@@ -45,6 +45,8 @@ export const Dashboard = (props: IDashboardProps) => {
     })
   }
 
+  const noGroups = (!user.Formation) && (!user.Formed) && (!user.Verified)
+
   return (
       <div className='sidebar'>
           <div className="home-container" onClick={() => navigate('/home')}>
@@ -55,24 +57,32 @@ export const Dashboard = (props: IDashboardProps) => {
             <span>{user?.email}</span>
           </div>
           <div className="user-groups">
-            <h4 className="user-group-header">Your groups</h4>
-              <div className="stage-section">
-              {
-                !!user.Formation && (
-                  groupsInStage('Formation', user.Formation)
-                )
-              } 
-              {
-                !!user.Formed && (
-                  groupsInStage('Formed', user.Formed)
-                )
-              }
-              {
-                !!user.Verified && (
-                  groupsInStage('Verified', user.Verified)
-                )
-              } 
-              </div> 
+            <h4 className="user-group-header">Your groups</h4>             
+            {
+              noGroups
+              ? 
+                <div className="nothing-to-show">
+                  No memberships
+                </div>
+              : 
+                <div className="stage-section">
+                  {
+                    !!user.Formation && (
+                      groupsInStage('Formation', user.Formation)
+                    )
+                  }
+                  {
+                    !!user.Formed && (
+                      groupsInStage('Formed', user.Formed)
+                    )
+                  }
+                  {               
+                    !!user.Verified && (
+                      groupsInStage('Verified', user.Verified)
+                    )  
+                  }
+                </div>                  
+            }            
           </div>
           <div className="user-logout" onClick={() => handleLogout()}>
             <h4>Logout</h4>

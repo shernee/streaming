@@ -66,7 +66,7 @@ export const SubscriptionGroups = (props: IGroupList) => {
       </Table>
       <div className="action-row">
         <div className='create-group-button'>
-          <Button variant="success" onClick={() => handleCreateGroup()}>
+          <Button className="create-btn" onClick={() => handleCreateGroup()}>
             Create Group
           </Button>
         </div>

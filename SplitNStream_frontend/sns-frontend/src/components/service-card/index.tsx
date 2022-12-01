@@ -3,10 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { serviceShape } from 'data/type'
 import { Card, ListGroup, Table } from 'react-bootstrap'
 import 'components/service-card/index.css'
-import disney from 'assets/disney.jpg'
-import hulu from 'assets/hulu.jpg'
-import netflix from 'assets/netflix.jpg'
-import prime from 'assets/prime.png'
+import cardImg from 'assets/card-img.png'
 
 interface IServiceCard {
   services: serviceShape
@@ -16,8 +13,11 @@ export const ServiceCard = (props: IServiceCard) => {
   const { services } = props
   const navigate = useNavigate()
 
-  const handleSelectSubscription = (e: React.MouseEvent<Element, MouseEvent>, subscriptionId: number) => {
-    navigate(`/group-list/${subscriptionId}`)
+  const handleSelectSubscription = (
+    e: React.MouseEvent<Element, MouseEvent>, subscriptionId: number, subscriptionName: string, serviceName: string
+  ) => {
+    const subscription = `${serviceName}-${subscriptionName}`
+    navigate(`/group-list/${subscriptionId}/${subscription}`)
   }
 
   return (
@@ -25,7 +25,7 @@ export const ServiceCard = (props: IServiceCard) => {
       {
         Object.keys(services).map((service, index) => (
           <Card key={index}>
-            {/* <Card.Img variant="top" src= {disney}/> */}
+            <Card.Img src={cardImg}/>
             <Card.Body>
               <Card.Title>
                 {service}
@@ -33,10 +33,11 @@ export const ServiceCard = (props: IServiceCard) => {
                 <Table borderless>
                   {
                     services[service].map((subscription) => (
-                      <tbody
+                      <tr
                         key={subscription.subscription_id}
                         className="d-flex justify-content-between align-items-start subscription-row" 
-                        onClick={(e) => handleSelectSubscription(e, subscription.subscription_id)}
+                        onClick={(e) => handleSelectSubscription(
+                          e, subscription.subscription_id, subscription.name, service)}
                       >
                         <td>
                           {subscription.name}
@@ -44,7 +45,7 @@ export const ServiceCard = (props: IServiceCard) => {
                         <td>
                           {`$${subscription.price}`}
                         </td>
-                      </tbody>
+                      </tr>
                     ))
                   }
                 </Table>

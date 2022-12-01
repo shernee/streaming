@@ -17,9 +17,7 @@
 }
 .group-row:hover {
     cursor: pointer;
-    color: rgb(100, 156, 156);
-    transform: scale(1.05)
-    text-decoration: underline;
+    text-decoration: underline rgb(100, 156, 156);
 }
 
 .action-row {
@@ -32,6 +30,16 @@
 .create-group-button {
     align-self: flex-end;
     width: 20%
+}
+
+.create-btn {
+    background-color: rgb(100, 156, 156);
+    border-color:rgb(100, 156, 156)
+}
+
+.create-btn:hover {
+    background-color: rgb(100, 156, 156);
+    border-color:rgb(100, 156, 156)
 }
 
 

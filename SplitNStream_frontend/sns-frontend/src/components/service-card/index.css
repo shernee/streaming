@@ -13,7 +13,7 @@
     border-style: solid;
     border-radius: 10px;
     margin: 10px;
-    width: 40%;
+    width: 30%;
 }
 
 .card-title {
@@ -22,11 +22,11 @@
     border-bottom-style: solid;
     padding-bottom: 2px;
 }
-
-.subscription-row {
+.subscription-row:hover {
     cursor: pointer;
-    color: rgb(100, 156, 156);
+    text-decoration: underline rgb(100, 156, 156);
 }
-.card-img-top {
-    max-width: 100%;
+.card-img {
+    width: 100%;
+    height: 15vh;
 }
