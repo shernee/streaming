@@ -17,6 +17,7 @@ export const GroupDetail = () => {
     const [user, setUser] = useState<userShape>({first_name: '', last_name: '', email: ''})
     const [groupDetail, setGroupDetail] = useState<groupDetailShape>({
       group_id: -1,
+      group_name: '',
       subscription_name: '',
       service_name: '',
       subscription_price: 0,

@@ -1,5 +1,6 @@
 export interface userGroupShape {
-    group: number;
+    group_id: number;
+    group_name: string;
     subscription: string;
 }
 
@@ -23,7 +24,8 @@ export interface serviceShape {
 }
 
 export interface groupListDetailsShape {
-    group: number;
+    group_id: number;
+    group_name: string;
     max_members: number;
     current_num_members: number;
     stage: string;
@@ -41,6 +43,7 @@ export interface groupDetailMembersShape {
 
 export interface groupDetailShape {
     group_id: number;
+    group_name: string;
     subscription_name: string;
     service_name: string;
     subscription_price: number;
@@ -69,4 +72,10 @@ export interface SignUpShape {
     card_expiry: string,
     card_cvc : number,
     card_issuer : string,
+ }
+
+ export enum GroupStage {
+    Formation = "Waiting for Members",
+    Formed = "Payment in Progress",
+    Verified = "Subscribed",
  }

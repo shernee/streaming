@@ -31,7 +31,8 @@ class GroupListView(APIView):
         for group in group_qs:
             group_members = group.members.all()
             group_dict = {
-                "group": group.id,
+                "group_id": group.id,
+                "group_name": f'{group.subscription.service.name}-{group.id}',
                 "max_members": group.subscription.max_members_allowed,
                 "current_num_members": len(group_members),
                 "stage": group.get_stage_display(),
@@ -111,6 +112,7 @@ class GroupDetailView(APIView):
 
         response_dict = {
             "group_id": group_model.id,
+            "group_name": f'{group_model.subscription.service.name}-{group_model.id}',
             "subscription_name": group_model.subscription.name,
             "service_name": group_model.subscription.service.name,
             "subscription_price": group_model.subscription.price,
@@ -179,7 +181,7 @@ class GroupLeaveView(APIView):
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
         except custom_errors.GroupNotInFormationStage as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
-        except custom_errors.UserMembershipExistsForGroup as e:
+        except custom_errors.UserMembershipDoesNotExistForGroup as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)
         except custom_errors.GroupMemberLimitExceeded as e:
             return get_business_error_response(error=e, http_status_code=status.HTTP_412_PRECONDITION_FAILED)

@@ -16,10 +16,16 @@ export const Register = () => {
     const [last_name, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [user, setUser] = useState<SignUpShape>({username: '', first_name:'', last_name: '', email: '',password:''})
+    const [errors, setErrors] = useState("")
+
+    useEffect(() => {
+      const registerUserUrl = `/api/register-user/`
+      axios.get(registerUserUrl).then((r)=>{console.log(r)})
+    }, [])
 
 
-    const registerUser = () => {      
+    const registerUser = (e: React.SyntheticEvent) => { 
+      e.preventDefault();     
         const registerUserUrl = `/api/register-user/`
         const registerUserPostData = {
           username: username,
@@ -29,16 +35,13 @@ export const Register = () => {
           password: password
         }
         axios.post(registerUserUrl, registerUserPostData).then((resp) => {
-          if(resp.status === 201) {
-            console.log(resp)
-
-            const createuserid = resp.data.userid
-            navigate('/')
-          } else {
-            alert(`${resp.statusText}`)
-          }
-        })
-      }
+            if(resp.status === 201){
+               navigate('/')
+            }          
+         }).catch(error => {
+            setErrors(error.response.data.message)
+         }) 
+        }
         return (
           <div className='wrapper'>
             <div className='form-wrapper'>
@@ -67,8 +70,9 @@ export const Register = () => {
                      <label htmlFor="password">Password</label>
                      <input type='password' name='password'
                      onChange={(e) => {setPassword(e.target.value)}}/>
-                  </div>              
-                  <div className='submit' onClick={(e) => {registerUser()}}>
+                  </div>
+                  {!!errors && <p className="error-text">{errors}</p>}              
+                  <div className='submit' onClick={(e) => {registerUser(e)}}>
                      <button>Register Me</button>
                   </div>
          </div>
