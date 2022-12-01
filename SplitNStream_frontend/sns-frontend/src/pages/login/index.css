@@ -12,7 +12,7 @@
 }
 
 .cover {
-    background-color: white;
+    background-color: rgb(241, 235, 235);
     width: 30%;
     height: 40%;
     position: relative;
@@ -27,7 +27,7 @@
 
 input{
     border: none;
-    background-color: rgb(229, 226, 226);
+    background-color: white;
     width: 80%;
     border-radius: 0.25em;
     text-align: center;
@@ -36,13 +36,13 @@ input{
 }
 
 input:focus{
-    outline-color: rgb(32, 177, 255);
+    outline-color: rgb(100, 156, 156);
 }
 
 .login-btn {
     width: 40%;
     height: 3em;
-    background-color: rgb(32, 177, 255);
+    background-color: rgb(100, 156, 156);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,7 +51,7 @@ input:focus{
     cursor: pointer;
 
 }
-.login-btn:hover { transform: scale(1.25);}
+/* .login-btn:hover { transform: scale(1.25);} */
 
 .text {
     position:relative;

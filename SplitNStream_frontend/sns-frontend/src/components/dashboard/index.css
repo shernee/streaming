@@ -5,10 +5,11 @@
     width: 20%;
     margin: 20px;
     border-width: 1px;
-    border-color: darkslateblue;
+    border-color: rgb(100, 156, 156);
     border-style: solid;
     border-radius: 10px;
     background-color: white;
+    box-shadow: 0px 8px 36px rgb(173, 179, 179);
 }
 
 .sidebar div {
@@ -18,20 +19,20 @@
 
 .home-container {
     border-bottom: 0.5px;
-    border-bottom-color: darkslateblue;
+    border-bottom-color: rgb(100, 156, 156);
     border-bottom-style: solid;
 }
 
 .home-container:hover {
     cursor: pointer;
-    color: darkslateblue;
+    color: rgb(100, 156, 156);
 }
 
 .user-info {
     display: flex;
     flex-direction: column;
     border-bottom: 0.5px;
-    border-bottom-color: darkslateblue;
+    border-bottom-color: rgb(100, 156, 156);
     border-bottom-style: solid;
 }
 
@@ -40,7 +41,7 @@
     flex-direction: column;
     padding: 5px;
     border-bottom: 0.5px;
-    border-bottom-color: darkslateblue;
+    border-bottom-color: rgb(100, 156, 156);
     border-bottom-style: solid;
 }
 
@@ -66,10 +67,10 @@
 
 .group-name:hover {
     cursor: pointer;
-    color: darkslateblue;
+    color: rgb(100, 156, 156);
 }
 
 .user-logout:hover {
     cursor: pointer;
-    color: darkslateblue;
+    color: rgb(100, 156, 156);
 }
