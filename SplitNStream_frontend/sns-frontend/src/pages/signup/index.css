@@ -98,4 +98,10 @@ p, div {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 10px;
+  }
+
+  .backto-login:hover {
+    cursor: pointer;
+    text-decoration: underline rgb(100, 156, 156);
   }

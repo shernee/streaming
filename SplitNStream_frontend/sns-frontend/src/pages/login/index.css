@@ -65,4 +65,9 @@ input:focus{
 
 .error-text {
     color: red;
-  }
+}
+
+.signup:hover {
+    cursor: pointer;
+    text-decoration: underline rgb(100, 156, 156);
+}

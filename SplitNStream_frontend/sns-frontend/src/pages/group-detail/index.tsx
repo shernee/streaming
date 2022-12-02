@@ -118,18 +118,16 @@ export const GroupDetail = () => {
             handleShowPaymentModal={handleShowPaymentModal}
           /> 
           <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-            <Modal.Dialog>
               <Modal.Header>
                 <Modal.Title> Your group will be deleted</Modal.Title>
               </Modal.Header>             
               <Modal.Body>
                 <p>You are the only member of the group. Your group will be deleted once you leave!</p>
-              </Modal.Body>
-              <Modal.Footer>
+                <div className='modal-buttons'>
                 <Button variant="danger" onClick={() => setShowDeleteModal(false)}>Don't leave</Button>
                 <Button variant="primary" onClick={() => callLeaveGroupApi()}>Leave group</Button>
-              </Modal.Footer>
-            </Modal.Dialog> 
+              </div>
+              </Modal.Body>
           </Modal>
           <Payment 
             setShowPaymentModal={setShowPaymentModal} 

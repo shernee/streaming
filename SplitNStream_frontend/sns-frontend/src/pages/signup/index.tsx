@@ -75,6 +75,9 @@ export const Register = () => {
                   <div className='submit' onClick={(e) => {registerUser(e)}}>
                      <button>Register Me</button>
                   </div>
+                  <span className='backto-login' onClick={e => navigate('/')}>
+                     Go back to Login
+                  </span>
          </div>
       </div>
      );

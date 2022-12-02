@@ -12,7 +12,14 @@
 .detail-view {
     display: flex;
     height: 100%;
-    width: 50%;
+    width: 80%;
     flex-direction: column;
     margin: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px !important;
+    margin-right: 5px !important;
 }
