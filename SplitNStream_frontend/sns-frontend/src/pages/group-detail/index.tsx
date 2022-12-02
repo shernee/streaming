@@ -28,6 +28,8 @@ export const GroupDetail = () => {
       is_member: false,
       user_id: -1,
       user_paid: false,
+      subscription_start_date: '',
+      subscription_end_date: '',
       subscription_email: '',
       subscription_password: ''
     })

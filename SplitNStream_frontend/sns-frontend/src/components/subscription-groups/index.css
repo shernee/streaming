@@ -20,27 +20,7 @@
     text-decoration: underline rgb(100, 156, 156);
 }
 
-.action-row {
-    padding-top: 5px;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: row;
-}
 
-.create-group-button {
-    align-self: flex-end;
-    width: 20%
-}
-
-.create-btn {
-    background-color: rgb(100, 156, 156);
-    border-color:rgb(100, 156, 156)
-}
-
-.create-btn:hover {
-    background-color: rgb(100, 156, 156);
-    border-color:rgb(100, 156, 156)
-}
 
 
 

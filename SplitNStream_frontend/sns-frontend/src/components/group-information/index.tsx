@@ -32,7 +32,17 @@ export const GroupInformation = (props: IGroupInformation) => {
     {
       label: "Each member of the group pays",
       value: `$${group['price_per_member']}`
-    }]
+    },
+    {
+      label: "First day of subscription",
+      value: group['subscription_start_date'].length > 0 ? group['subscription_start_date'] : 'Not yet started'
+    },
+    {
+      label: "Last day of subscription",
+      value: group['subscription_end_date'].length > 0 ? group['subscription_end_date'] : '-'
+    }
+  ]
+
 
   const showPayButton = group.is_member && !group.user_paid && group.group_stage==="Formed"
   const showJoinButton = !group.is_member && group.group_stage === "Formation"

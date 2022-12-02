@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 
 from django.db import transaction
 
@@ -58,7 +59,12 @@ def make_payment(request_user_model: User, unsafe_group_id: int, unsafe_payment_
                 paid_on=datetime.datetime.now()
             )
             # Update group stage to verified
-            Group.objects.filter(id=group_id).update(stage=Group.StageChoice.VERIFIED)
+            Group.objects.filter(id=group_id)\
+                .update(
+                    stage=Group.StageChoice.VERIFIED,
+                    subscription_start_date=datetime.datetime.now(),
+                    subscription_end_date=datetime.datetime.now() + relativedelta(month=+1)
+                )
 
             return payment_model
 

@@ -16,6 +16,7 @@ interface IDashboardProps {
 export const Dashboard = (props: IDashboardProps) => {
   const { user } = props
   const navigate = useNavigate()
+  console.log(JSON.stringify(user))
 
   const handleSelectUserGroup = (e: React.MouseEvent<Element, MouseEvent>, groupId: number) => {
     navigate(`/group-detail/${groupId}`)

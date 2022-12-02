@@ -54,6 +54,8 @@ export interface groupDetailShape {
     is_member: boolean;
     user_id: number;
     user_paid: boolean;
+    subscription_start_date: string;
+    subscription_end_date: string;
     subscription_email: string;
     subscription_password: string;
 }
