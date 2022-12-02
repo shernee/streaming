@@ -27,7 +27,6 @@ export const Login = () => {
     formData.append('username', username);   
     formData.append('password', password);
     formData.append('csrfmiddlewaretoken', Cookies.get('csrftoken') || "");
-    console.log('In login')
     const userLogin = async() => {
       axios.post(loginUrl, formData).then((loginResponse) => {
         if(loginResponse.status === 202) {
@@ -60,7 +59,9 @@ export const Login = () => {
           />
           {!!errors && <p className="error-text">{errors}</p>}  
           <div className="login-btn" onClick={(e) => handleLogin(e)}>Login</div>
-          <span className='signup' onClick={e => navigate('/signup')}>Not a member yet? Signup!</span>
+          <span className='signup' onClick={e => navigate('/signup')}>
+            Not a member yet? <span style={{color: 'rgb(100, 156, 156)'}}>Signup!</span>
+          </span>
       </div>
     </div>
   )
