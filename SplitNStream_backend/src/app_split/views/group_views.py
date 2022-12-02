@@ -107,9 +107,13 @@ class GroupDetailView(APIView):
         
         subscription_email = ""
         subscription_password = ""
+        subscription_start = ""
+        subscription_end = ""
         if group_model.stage == 3:
             subscription_email = group_model.subscription_email
             subscription_password = group_model.subscription_password
+            subscription_start = group_model.subscription_start_date.isoformat()
+            subscription_end = group_model.subscription_end_date.isoformat()
 
         response_dict = {
             "group_id": group_model.id,
@@ -124,6 +128,8 @@ class GroupDetailView(APIView):
             "is_member": request.user in current_group_members,
             "user_id": request.user.id,
             "user_paid": request.user.id in payment_qs,
+            "subscription_start_date": subscription_start,
+            "subscription_end_date": subscription_end,
             "subscription_email": subscription_email,
             "subscription_password": subscription_password
         }

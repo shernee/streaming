@@ -35,6 +35,8 @@ class Group(models.Model):
 
     subscription = models.ForeignKey('Subscription',on_delete=models.CASCADE)
     members = models.ManyToManyField('User', through='Membership')
+    subscription_start_date = models.DateTimeField(null=True, blank=True)
+    subscription_end_date = models.DateTimeField(null=True, blank=True)
 
     stage = models.PositiveSmallIntegerField(
         choices = StageChoice.choices,

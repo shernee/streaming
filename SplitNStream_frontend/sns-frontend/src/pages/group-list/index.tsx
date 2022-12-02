@@ -74,6 +74,13 @@ export const Groups = () => {
                 </div>
               )
           } 
+        <div className="action-row">
+        <div className='create-group-button'>
+          <Button className="create-btn" onClick={() => handleCreateGroup()}>
+            Create Group
+          </Button>
+        </div>
+      </div> 
         <Modal
           show={showCreatedModal} 
           onHide={() => setShowCreatedModal(false)} 
